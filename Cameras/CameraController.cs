@@ -8,6 +8,8 @@ using UnityEngine.SceneManagement;
 
 public class CameraController : MonoBehaviour {
     
+    public GameObject Canvas;
+
     Camera camera;
     GameObject focus;
 
@@ -17,6 +19,8 @@ public class CameraController : MonoBehaviour {
     float speed = 1f;
 
     void Start() {
+        Canvas.SetActive(true);
+        
         camera = this.GetComponent<Camera>();
         focus = GameObject.Find("Ship");
 
