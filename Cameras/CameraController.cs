@@ -20,7 +20,7 @@ public class CameraController : MonoBehaviour {
 
     void Start() {
         Canvas.SetActive(true);
-        
+
         camera = this.GetComponent<Camera>();
         focus = GameObject.Find("Ship");
 
@@ -31,11 +31,10 @@ public class CameraController : MonoBehaviour {
     // Visualized via marching cubes... On update, update cubes to any granular damage
     public float dragSpeed = .25f;
     private Vector3 dragOrigin;
- 
- 
+
     void LateUpdate()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && Input.mousePosition.x > Screen.width / 4 && Input.mousePosition.x < 3 * Screen.width / 4 )
         {
             dragOrigin = Input.mousePosition;
             cursor.SetActive(true);
@@ -57,7 +56,7 @@ public class CameraController : MonoBehaviour {
                 new Vector3 (0, 0, Mathf.Rad2Deg * Mathf.Atan ((dragOrigin.y - Input.mousePosition.y) / (dragOrigin.x - Input.mousePosition.x)))
             );
         }
-        transform.Translate(pos, Space.World);  
+        if (cursor.activeSelf) transform.Translate(pos, Space.World);  
     }
 
     public void ZoomIn() {
