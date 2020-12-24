@@ -34,13 +34,19 @@ public class CameraController : MonoBehaviour {
 
     void LateUpdate()
     {
-        if (Input.GetMouseButtonDown(0) && Input.mousePosition.x > Screen.width / 4 && Input.mousePosition.x < 3 * Screen.width / 4 )
+        if (Input.mousePosition.x > Screen.width / 4 && Input.mousePosition.x < 3 * Screen.width / 4 ) 
         {
-            dragOrigin = Input.mousePosition;
-            cursor.SetActive(true);
-            cursor.transform.position = Input.mousePosition;
-            drag.GetComponent<RectTransform> ().sizeDelta = Vector2.zero;
-            return;
+            GetComponent<Camera>().orthographicSize += Input.GetAxis("Mouse ScrollWheel") * GetComponent<Camera>().orthographicSize / 5;
+            if (GetComponent<Camera>().orthographicSize < 5) GetComponent<Camera>().orthographicSize = 5; 
+            if (GetComponent<Camera>().orthographicSize > 5000) GetComponent<Camera>().orthographicSize = 5000;
+            if (Input.GetMouseButtonDown(0))
+            {
+                dragOrigin = Input.mousePosition;
+                cursor.SetActive(true);
+                cursor.transform.position = Input.mousePosition;
+                drag.GetComponent<RectTransform> ().sizeDelta = Vector2.zero;
+                return;
+            }
         }
         if (!Input.GetMouseButton(0)) 
         {
@@ -57,6 +63,11 @@ public class CameraController : MonoBehaviour {
             );
         }
         if (cursor.activeSelf) transform.Translate(pos, Space.World);  
+    }
+
+    public float GetDragDelta() 
+    {
+        return drag.GetComponent<RectTransform> ().sizeDelta.magnitude;
     }
 
     public void ZoomIn() {
