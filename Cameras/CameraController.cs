@@ -34,9 +34,9 @@ public class CameraController : MonoBehaviour {
 
     void LateUpdate()
     {
-        if (Input.mousePosition.x > Screen.width / 4 && Input.mousePosition.x < 3 * Screen.width / 4 ) 
+        if (Input.mousePosition.x > Screen.width / 2) //&& Input.mousePosition.x < 3 * Screen.width / 4 ) 
         {
-            GetComponent<Camera>().orthographicSize += Input.GetAxis("Mouse ScrollWheel") * GetComponent<Camera>().orthographicSize / 5;
+            GetComponent<Camera>().orthographicSize -= Input.GetAxis("Mouse ScrollWheel") * GetComponent<Camera>().orthographicSize / 5;
             if (GetComponent<Camera>().orthographicSize < 5) GetComponent<Camera>().orthographicSize = 5; 
             if (GetComponent<Camera>().orthographicSize > 5000) GetComponent<Camera>().orthographicSize = 5000;
             if (Input.GetMouseButtonDown(0))
@@ -53,7 +53,10 @@ public class CameraController : MonoBehaviour {
             cursor.SetActive(false);
             return;
         }
-        Vector3 pos = Camera.main.ScreenToViewportPoint(Input.mousePosition - dragOrigin);
+
+        Vector3 change = Input.mousePosition - dragOrigin;
+        change.x +=  Screen.width / 2;
+        Vector3 pos = this.GetComponent<Camera>().ScreenToViewportPoint(change);
         float magnitude = (Input.mousePosition - dragOrigin).magnitude;
         if (magnitude > 1) {
             drag.GetComponent<RectTransform> ().localPosition = (Input.mousePosition - dragOrigin) / 2f;
