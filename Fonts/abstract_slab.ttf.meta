@@ -8,10 +8,10 @@ TrueTypeFontImporter:
   characterSpacing: 0
   characterPadding: 1
   includeFontData: 1
-  fontName: Abstract Slab
   fontNames:
   - Abstract Slab
-  fallbackFontReferences: []
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 6973424e99cfb524b86952b536efd71c, type: 3}
   customCharacters: 
   fontRenderingMode: 0
   ascentCalculationMode: 1

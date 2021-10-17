@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 6c4d7633a4ccf664da76189434ab98d4
+guid: 94695620b5fc57e49aa8a5ed740f3323
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
@@ -9,7 +9,7 @@ TrueTypeFontImporter:
   characterPadding: 1
   includeFontData: 1
   fontNames:
-  - Courier New
+  - Noto Sans
   fallbackFontReferences: []
   customCharacters: 
   fontRenderingMode: 0
