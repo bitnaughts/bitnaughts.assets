@@ -8,43 +8,39 @@ using UnityEngine.SceneManagement;
 
 public class CameraController : MonoBehaviour {
     
-    public GameObject Canvas;
-
     Camera camera;
     GameObject focus;
 
     GameObject cursor;
-    GameObject drag;
 
     float speed = 1f;
 
     void Start() {
-        Canvas.SetActive(true);
 
         camera = this.GetComponent<Camera>();
         focus = GameObject.Find("Ship");
 
         cursor = GameObject.Find("Cursor");
-        drag = GameObject.Find("Drag");
     }
 
     // Visualized via marching cubes... On update, update cubes to any granular damage
     public float dragSpeed = .25f;
     private Vector3 dragOrigin;
-
+    private Vector3 oldPos;
     void LateUpdate()
     {
         if (Input.mousePosition.x > Screen.width / 2) //&& Input.mousePosition.x < 3 * Screen.width / 4 ) 
         {
             GetComponent<Camera>().orthographicSize -= Input.GetAxis("Mouse ScrollWheel") * GetComponent<Camera>().orthographicSize / 5;
             if (GetComponent<Camera>().orthographicSize < 5) GetComponent<Camera>().orthographicSize = 5; 
-            if (GetComponent<Camera>().orthographicSize > 5000) GetComponent<Camera>().orthographicSize = 5000;
+            if (GetComponent<Camera>().orthographicSize > 800) GetComponent<Camera>().orthographicSize = 800;
             if (Input.GetMouseButtonDown(0))
             {
-                dragOrigin = Input.mousePosition;
+                dragOrigin = this.GetComponent<Camera>().ScreenToViewportPoint(Input.mousePosition);
                 cursor.SetActive(true);
                 cursor.transform.position = Input.mousePosition;
-                drag.GetComponent<RectTransform> ().sizeDelta = Vector2.zero;
+                
+                oldPos = transform.position;
                 return;
             }
         }
@@ -54,23 +50,15 @@ public class CameraController : MonoBehaviour {
             return;
         }
 
-        Vector3 change = Input.mousePosition - dragOrigin;
-        change.x +=  Screen.width / 2;
-        Vector3 pos = this.GetComponent<Camera>().ScreenToViewportPoint(change);
-        float magnitude = (Input.mousePosition - dragOrigin).magnitude;
-        if (magnitude > 1) {
-            drag.GetComponent<RectTransform> ().localPosition = (Input.mousePosition - dragOrigin) / 2f;
-            drag.GetComponent<RectTransform> ().sizeDelta = new Vector2 (magnitude, 4f);
-            drag.GetComponent<RectTransform> ().localRotation = Quaternion.Euler (
-                new Vector3 (0, 0, Mathf.Rad2Deg * Mathf.Atan ((dragOrigin.y - Input.mousePosition.y) / (dragOrigin.x - Input.mousePosition.x)))
-            );
+        // Vector3 change = Input.mousePosition - dragOrigin;
+        // change.x += Screen.width / 2;
+        Vector3 pos = this.GetComponent<Camera>().ScreenToViewportPoint(Input.mousePosition) - dragOrigin;
+        if (cursor.activeSelf) {
+            // pos.x *= dragSpeed;
+            // pos.y *= dragSpeed;   
+            transform.position = oldPos + -pos * GetComponent<Camera>().orthographicSize * 2f;
         }
-        if (cursor.activeSelf) transform.Translate(pos, Space.World);  
-    }
-
-    public float GetDragDelta() 
-    {
-        return drag.GetComponent<RectTransform> ().sizeDelta.magnitude;
+        // dragOrigin = Input.mousePosition;
     }
 
     public void ZoomIn() {
