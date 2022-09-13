@@ -12,8 +12,8 @@ using UnityEngine.Rendering.Universal;
 
 public class CameraController : MonoBehaviour {
     Camera camera;
-    GameObject focus;
-    GameObject cursor;
+    // GameObject focus;
+    // GameObject cursor;
     GameObject example;
 
     public Interactor Interactor;
@@ -26,8 +26,8 @@ public class CameraController : MonoBehaviour {
     void Start() {
 
         camera = this.GetComponent<Camera>();
-        focus = GameObject.Find("Station");
-        cursor = GameObject.Find("Cursor");
+        // focus = GameObject.Find("Station");
+        // cursor = GameObject.Find("Cursor");
         // example = GameObject.Find("Example");
         // example.SetActive(false);
     }
@@ -128,7 +128,7 @@ public class CameraController : MonoBehaviour {
         }
         if(Input.GetMouseButtonDown(0) && OverlayInteractor.gameObject.activeSelf == false && Input.mousePosition.x > Screen.width / 2)
         {
-            cursor.SetActive(true);
+            // cursor.SetActive(true);
             bDragging = true;
             oldPos = transform.position;
             //Get the ScreenVector the mouse clicked
@@ -137,7 +137,7 @@ public class CameraController : MonoBehaviour {
         }
         if(Input.GetMouseButton(0) && OverlayInteractor.gameObject.activeSelf == false && bDragging)
         {
-            cursor.transform.position = this.GetComponent<Camera>().ScreenToViewportPoint(Input.mousePosition);
+            // cursor.transform.position = this.GetComponent<Camera>().ScreenToViewportPoint(Input.mousePosition);
             //Get the difference between where the mouse clicked and where it moved
             Vector3 pos = Camera.main.ScreenToViewportPoint(Input.mousePosition) - panOrigin;    
             //Move the position of the camera to simulate a drag, speed * 10 for screen to worldspace conversion
