@@ -141,7 +141,7 @@ public class CameraController : MonoBehaviour {
             //Get the difference between where the mouse clicked and where it moved
             Vector3 pos = Camera.main.ScreenToViewportPoint(Input.mousePosition) - panOrigin;    
             //Move the position of the camera to simulate a drag, speed * 10 for screen to worldspace conversion
-            transform.position = oldPos + -pos * GetComponent<Camera>().orthographicSize;   
+            transform.position = oldPos + -pos * GetComponent<Camera>().orthographicSize * 2f;   
             transform.position = new Vector3(transform.position.x, transform.position.y, -10f);          
         }
         if(Input.GetMouseButtonUp(0) && bDragging)
