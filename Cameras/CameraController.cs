@@ -45,7 +45,21 @@ public class CameraController : MonoBehaviour {
     bool CheckInsideEdge() {
         return (Input.mousePosition.y > 60 && Input.mousePosition.y < Screen.height - 60 && Input.mousePosition.x > Screen.width / 2 && Input.mousePosition.x < Screen.width - 60);
     }
-
+    int component = 0;
+    public void ToggleView() {
+        string[] components = Interactor.Ship.GetInteractiveComponents();
+        component = (component + 1) % components.Length;
+        Interactor.RenderComponent(components[component]);
+        OverlayInteractor.gameObject.SetActive(true);
+        for (int i = 0; i < OverlayInteractor.OverlayDropdown.options.Count; i++) {
+            if (OverlayInteractor.OverlayDropdown.options[i].text == components[component]) OverlayInteractor.OverlayDropdown.value = i; 
+        }
+        this.transform.SetParent(GameObject.Find(components[component]).transform);
+        this.transform.localPosition = new Vector3(0, 0, -200);
+        this.transform.localEulerAngles = new Vector3(0, 0, 0);
+        OverlayInteractor.OnDropdownChange();
+        Interactor.Sound("Toggle");
+    }
 
     void LateUpdate()
     {
@@ -104,25 +118,25 @@ public class CameraController : MonoBehaviour {
         camera.orthographicSize += 20;
     }
     public void OnPanUp() {
-            Interactor.PlayClick();
+        Interactor.Sound("Click");
         Interactor.PanTutorial();
         transform.Translate(new Vector3(0, GetComponent<Camera>().orthographicSize * .33f, 0)); 
         if (OverlayInteractor.gameObject.activeSelf) OverlayInteractor.Resize();
     }
     public void OnPanLeft() {
-            Interactor.PlayClick();
+        Interactor.Sound("Click");
         Interactor.PanTutorial();
         transform.Translate(new Vector3(-GetComponent<Camera>().orthographicSize * .33f, 0, 0)); 
         if (OverlayInteractor.gameObject.activeSelf) OverlayInteractor.Resize();
     }
     public void OnPanRight() {
-            Interactor.PlayClick();
+        Interactor.Sound("Click");
         Interactor.PanTutorial();
         transform.Translate(new Vector3(GetComponent<Camera>().orthographicSize * .33f, 0, 0)); 
         if (OverlayInteractor.gameObject.activeSelf) OverlayInteractor.Resize();
     }
     public void OnPanDown() {
-            Interactor.PlayClick();
+        Interactor.Sound("Click");
         Interactor.PanTutorial();
         transform.Translate(new Vector3(0, -GetComponent<Camera>().orthographicSize * .33f, 0)); 
         if (OverlayInteractor.gameObject.activeSelf) OverlayInteractor.Resize();
