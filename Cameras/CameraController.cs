@@ -42,65 +42,14 @@ public class CameraController : MonoBehaviour {
     public float waitTime, waitTime2;
     float timer = 0f;
 
+    bool CheckInsideEdge() {
+        return (Input.mousePosition.y > 60 && Input.mousePosition.y < Screen.height - 60 && Input.mousePosition.x > Screen.width / 2 && Input.mousePosition.x < Screen.width - 60);
+    }
 
 
     void LateUpdate()
     {
-       
-    //     if (timer < 5.5f) {
-    //         GetComponent<AudioSource>().volume = 0f;
-    //         focus.GetComponent<AudioSource>().volume = 1f;
-    //     }
-    //     if (timer > 5.5f && timer < 6.5f) {
-    //         // if (timer > .5f && timer < 5.5f) {
-    //             // this.GetComponent<Camera>().orthographicSize = 64f - (int)((timer-.5f) * 1.325f) * 7.547f;
-    //         // }
-    //         GetComponent<AudioSource>().volume = Mathf.Lerp(0f, 1f, timer-5.5f);
-    //         focus.GetComponent<AudioSource>().volume = Mathf.Lerp(1f, 0f, timer-5.5f);
-    //     }
-    //     if (timer > 20 && timer < 29) {
-    //         this.GetComponent<Camera>().orthographicSize = 40f;
-    //         transform.position = new Vector3(-20f + (int)(timer - 20) * 5, 240f - (int)(timer - 20) * 5, -200f);
-    //     }
-
-    //     if (timer > 30 && timer < 31) {
-    //         this.GetComponent<Camera>().orthographicSize = 25f;
-    //         transform.position = new Vector3(0, 0f, -200f);
-    //     }
-    //     if (timer > 28.5f && timer < 32.5f) {
-    //         focus.GetComponent<AudioSource>().volume = Mathf.Lerp(0f, 0.5f, (timer - 28.5f)/4f);
-    //         if (timer < 29.5f) GetComponent<AudioSource>().volume = Mathf.Lerp(1f, 0f, timer-28.5f);
-    //     }
-    //     if (timer > 45 && timer < 46) {
-    //         example.SetActive(true);
-    //     }
-    //     if (timer > 70 && timer < 71) {
-    //         focus.GetComponent<AudioSource>().volume = Mathf.Lerp(0.5f, 0.0f, timer - 70);
-    //         GetComponent<AudioSource>().clip = IntroCallback;
-    //         GetComponent<AudioSource>().volume = 1f;
-    //         GetComponent<AudioSource>().Play();
-    //     }
-    //      if (timer > 76 && timer < 79) {
-    //         this.GetComponent<Camera>().orthographicSize = 20f;// - (int)((timer-76) * 2);
-    //         transform.position = new Vector3(20, 200f, -200f);
-    //     }
-    //      if (timer > 79 && timer < 82) {
-    //         this.GetComponent<Camera>().orthographicSize = 20f;// - (int)((timer-76) * 2);
-    //         transform.position = new Vector3(-20, 240f, -200f);
-    //     }
-    //     if (timer > 82 && timer < 83) {
-    //         this.GetComponent<Camera>().orthographicSize = 240f;
-    //         transform.position = new Vector3(0, 175f, -200f);
-    //     }
-    //     if (timer > 93 && timer < 98) {
-    //         focus.GetComponent<AudioSource>().volume = Mathf.Lerp(0.00f, 0.5f, (timer - 93)/5f);
-    //         this.GetComponent<Camera>().orthographicSize = 140f;
-    //     }
-    //     if (timer > 120 && timer < 135) {
-    //         this.GetComponent<Camera>().orthographicSize = 140f + (int)((timer-120) * 1) * 20;
-    //         focus.GetComponent<AudioSource>().volume = Mathf.Lerp(0.5f, 0f, (timer - 120)/15f);
-    //     }
-        if (Input.mousePosition.x > Screen.width / 2) //&& Input.mousePosition.x < 3 * Screen.width / 4 )  
+        if (CheckInsideEdge())
         {
             if (Input.GetAxis("Mouse ScrollWheel") != 0) {
                 if (GameObject.Find("Dropdown List") == null) { // && EventSystem.current.currentSelectedGameObject == null
@@ -125,56 +74,62 @@ public class CameraController : MonoBehaviour {
             } else {
                 wasZoomingLastFrame = false;
             }
+            if(Input.GetMouseButtonDown(0) && OverlayInteractor.gameObject.activeSelf == false )
+            {
+                bDragging = true;
+                oldPos = transform.position;
+                //Get the ScreenVector the mouse clicked
+                //https://answers.unity.com/questions/827834/click-and-drag-camera.html#:~:text=Click%20and%20Drag%20Camera%20-%20Unity%20Answers%20void,%2F%2FGet%20the%20ScreenVector%20the%20mouse%20clicked%20%7D%20if%28Input.GetMouseButton%280%29%29
+                panOrigin = Camera.main.ScreenToViewportPoint(Input.mousePosition);
+            }
+            if(Input.GetMouseButton(0) && OverlayInteractor.gameObject.activeSelf == false && bDragging)
+            {
+                //Get the difference between where the mouse clicked and where it moved
+                Vector3 pos = Camera.main.ScreenToViewportPoint(Input.mousePosition) - panOrigin;    
+                //Move the position of the camera to simulate a drag, speed * 10 for screen to worldspace conversion
+                transform.position = oldPos + -pos * GetComponent<Camera>().orthographicSize * 2f;   
+                transform.position = new Vector3(transform.position.x, transform.position.y, -10f);          
+            }
+            if(Input.GetMouseButtonUp(0) && bDragging)
+            {
+                Interactor.PanTutorial();
+                bDragging = false;
+            }
         }
-        if(Input.GetMouseButtonDown(0) && OverlayInteractor.gameObject.activeSelf == false && Input.mousePosition.x > Screen.width / 2)
-        {
-            // cursor.SetActive(true);
-            bDragging = true;
-            oldPos = transform.position;
-            //Get the ScreenVector the mouse clicked
-            //https://answers.unity.com/questions/827834/click-and-drag-camera.html#:~:text=Click%20and%20Drag%20Camera%20-%20Unity%20Answers%20void,%2F%2FGet%20the%20ScreenVector%20the%20mouse%20clicked%20%7D%20if%28Input.GetMouseButton%280%29%29
-            panOrigin = Camera.main.ScreenToViewportPoint(Input.mousePosition);
-        }
-        if(Input.GetMouseButton(0) && OverlayInteractor.gameObject.activeSelf == false && bDragging)
-        {
-            // cursor.transform.position = this.GetComponent<Camera>().ScreenToViewportPoint(Input.mousePosition);
-            //Get the difference between where the mouse clicked and where it moved
-            Vector3 pos = Camera.main.ScreenToViewportPoint(Input.mousePosition) - panOrigin;    
-            //Move the position of the camera to simulate a drag, speed * 10 for screen to worldspace conversion
-            transform.position = oldPos + -pos * GetComponent<Camera>().orthographicSize * 2f;   
-            transform.position = new Vector3(transform.position.x, transform.position.y, -10f);          
-        }
-        if(Input.GetMouseButtonUp(0) && bDragging)
-        {
-            Interactor.PanTutorial();
-            bDragging = false;
-        }
-
-        // // Vector3 change = Input.mousePosition - dragOrigin;
-        // // change.x += Screen.width / 2;
-        // // Vector3 pos = this.GetComponent<Camera>().ScreenToViewportPoint(Input.mousePosition) - dragOrigin; this.GetComponent<Camera>().ScreenToViewportPoint(
-        // // print (pos);
-        // if (cursor.activeSelf && !OverlayInteractor.gameObject.activeSelf) {
-        //     // pos.x *= dragSpeed;
-        //     // pos.y *= dragSpeed;   
-        //     transform.position = this.GetComponent<Camera>().ScreenToViewportPoint(oldPos + Input.mousePosition);// * GetComponent<Camera>().orthographicSize * 2f;
-        //     transform.position = new Vector3(transform.position.x, transform.position.y, -10f);
-        // }
-        // // oldPos = Input.mousePosition;
-        // dragOrigin = Input.mousePosition;
     }
-
     public void ZoomIn() {
-        
         if (camera.orthographicSize > 20) camera.orthographicSize -= 20;
     }
     public void ZoomOut() {
         camera.orthographicSize += 20;
     }
+    public void OnPanUp() {
+            Interactor.PlayClick();
+        Interactor.PanTutorial();
+        transform.Translate(new Vector3(0, GetComponent<Camera>().orthographicSize * .33f, 0)); 
+        if (OverlayInteractor.gameObject.activeSelf) OverlayInteractor.Resize();
+    }
+    public void OnPanLeft() {
+            Interactor.PlayClick();
+        Interactor.PanTutorial();
+        transform.Translate(new Vector3(-GetComponent<Camera>().orthographicSize * .33f, 0, 0)); 
+        if (OverlayInteractor.gameObject.activeSelf) OverlayInteractor.Resize();
+    }
+    public void OnPanRight() {
+            Interactor.PlayClick();
+        Interactor.PanTutorial();
+        transform.Translate(new Vector3(GetComponent<Camera>().orthographicSize * .33f, 0, 0)); 
+        if (OverlayInteractor.gameObject.activeSelf) OverlayInteractor.Resize();
+    }
+    public void OnPanDown() {
+            Interactor.PlayClick();
+        Interactor.PanTutorial();
+        transform.Translate(new Vector3(0, -GetComponent<Camera>().orthographicSize * .33f, 0)); 
+        if (OverlayInteractor.gameObject.activeSelf) OverlayInteractor.Resize();
+    }   
     public void ReloadScene() {
         SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);
     }
-
     public float GetAngle(Vector2 pointA, Vector2 pointB)
     {
         var target = pointB - pointA;
