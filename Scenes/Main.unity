@@ -5990,11 +5990,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1218915087118587499, guid: f1cf176e47a0e6849894859c25ed0c92, type: 3}
       propertyPath: m_Size.x
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 1218915087118587499, guid: f1cf176e47a0e6849894859c25ed0c92, type: 3}
       propertyPath: m_Size.y
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 2982528453959733197, guid: f1cf176e47a0e6849894859c25ed0c92, type: 3}
       propertyPath: m_RootOrder
@@ -6006,7 +6006,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2982528453959733197, guid: f1cf176e47a0e6849894859c25ed0c92, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 11
+      value: 11.5
       objectReference: {fileID: 0}
     - target: {fileID: 2982528453959733197, guid: f1cf176e47a0e6849894859c25ed0c92, type: 3}
       propertyPath: m_LocalPosition.z
@@ -6041,16 +6041,20 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3164856314794874526, guid: f1cf176e47a0e6849894859c25ed0c92, type: 3}
+      propertyPath: m_Size.x
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3164856314794874526, guid: f1cf176e47a0e6849894859c25ed0c92, type: 3}
       propertyPath: m_Size.y
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 3164856314794874526, guid: f1cf176e47a0e6849894859c25ed0c92, type: 3}
       propertyPath: m_SpriteTilingProperty.newSize.x
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 3164856314794874526, guid: f1cf176e47a0e6849894859c25ed0c92, type: 3}
       propertyPath: m_SpriteTilingProperty.newSize.y
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 6258904477058048182, guid: f1cf176e47a0e6849894859c25ed0c92, type: 3}
       propertyPath: m_Name
@@ -10880,7 +10884,7 @@ MonoBehaviour:
   TorpedoFact: {fileID: 8300000, guid: e00f8cff2c1871d41b92c4422695b9bb, type: 3}
   ProcessorPing: {fileID: 8300000, guid: 0e7534f72c5d8014b936cff0d688f341, type: 3}
   GimbalRotate: {fileID: 8300000, guid: 79584b226c0e3be4cb15e909598cfe5a, type: 3}
-  TorpedoLaunch: {fileID: 8300000, guid: 39ee89412622abf42ae4622e2868d152, type: 3}
+  TorpedoLaunch: {fileID: 8300000, guid: dad55a223e4aa0a4f95b3b7c17395fca, type: 3}
   ThemeSong: {fileID: 8300000, guid: 4e946539e5962e34ca0cfbd1db502fea, type: 3}
   Click: {fileID: 8300000, guid: 1973989b33e39d44a9898f7dd5b6b399, type: 3}
   Click2: {fileID: 8300000, guid: 18febd3556cb5c844bec126048f8368d, type: 3}
@@ -10890,6 +10894,16 @@ MonoBehaviour:
   SoundOnMouse: {fileID: 8300000, guid: 52aef3ba9fd5b624fb4d61169dbeb265, type: 3}
   SoundStart: {fileID: 8300000, guid: 896e8f7d8e5c68847aff4a7754d28385, type: 3}
   SoundToggle: {fileID: 8300000, guid: 3e6d76756a10e8b4b93e9ee0e5a97263, type: 3}
+  SoundProcessor: {fileID: 8300000, guid: f4b98a8717cf64342b26b5de9090c74e, type: 3}
+  SoundGimbal: {fileID: 8300000, guid: e2236a2e983066141aff2690cd8827f3, type: 3}
+  SoundCannon1: {fileID: 8300000, guid: 810421dd685cdc349bef39df04d02fbc, type: 3}
+  SoundCannon2: {fileID: 8300000, guid: 7f4d4ab765d3aa745bcdd06c24f67775, type: 3}
+  SoundCannon3: {fileID: 8300000, guid: 8776a58132a4c9e4e8828c26b882dbe2, type: 3}
+  SoundRadar: {fileID: 8300000, guid: e99d95f508a5fb749be57ea58f0d8af8, type: 3}
+  SoundThruster: {fileID: 8300000, guid: d1d4143339184164cbd6fae7c662c70b, type: 3}
+  SoundBooster: {fileID: 8300000, guid: e00f8cff2c1871d41b92c4422695b9bb, type: 3}
+  SoundTorpedo1: {fileID: 8300000, guid: 78217dbfc13f81d4eb38476451a40b42, type: 3}
+  SoundTorpedo2: {fileID: 8300000, guid: dad55a223e4aa0a4f95b3b7c17395fca, type: 3}
   Overlay: {fileID: 994649752499894179, guid: baed33df83122f24ebd612c10469632d, type: 3}
   Example: {fileID: 1701395963}
   Ship: {fileID: 1701395964}
@@ -13193,7 +13207,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 270}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -28, y: 158}
+  m_AnchoredPosition: {x: -28, y: 216}
   m_SizeDelta: {x: 76, y: 56}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1701954272
