@@ -10904,6 +10904,8 @@ MonoBehaviour:
   SoundBooster: {fileID: 8300000, guid: e00f8cff2c1871d41b92c4422695b9bb, type: 3}
   SoundTorpedo1: {fileID: 8300000, guid: 78217dbfc13f81d4eb38476451a40b42, type: 3}
   SoundTorpedo2: {fileID: 8300000, guid: dad55a223e4aa0a4f95b3b7c17395fca, type: 3}
+  SoundWarning: {fileID: 8300000, guid: ae4a3533b097dfc4dae1a127d3145e50, type: 3}
+  SoundWarningOver: {fileID: 8300000, guid: 55787942f94c49547875be1682278b5f, type: 3}
   Overlay: {fileID: 994649752499894179, guid: baed33df83122f24ebd612c10469632d, type: 3}
   Example: {fileID: 1701395963}
   Ship: {fileID: 1701395964}
