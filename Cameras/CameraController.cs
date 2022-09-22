@@ -67,7 +67,7 @@ public class CameraController : MonoBehaviour {
         {
             if (Input.GetAxis("Mouse ScrollWheel") != 0) {
                 if (GameObject.Find("Dropdown List") == null) { // && EventSystem.current.currentSelectedGameObject == null
-                    GetComponent<Camera>().orthographicSize = Mathf.Clamp(GetComponent<Camera>().orthographicSize - Input.GetAxis("Mouse ScrollWheel") * GetComponent<Camera>().orthographicSize / 10, 6f, 800f);
+                    GetComponent<Camera>().orthographicSize = Mathf.Clamp(GetComponent<Camera>().orthographicSize - Input.GetAxis("Mouse ScrollWheel") * GetComponent<Camera>().orthographicSize, 6f, 880f);
                     if (OverlayInteractor.gameObject.activeSelf) OverlayInteractor.Resize();
                     
                     Interactor.PanTutorial();
@@ -80,7 +80,7 @@ public class CameraController : MonoBehaviour {
                     lastZoomPositions = newPositions;
                 } else {
                     float offset = Vector2.Distance(newPositions[0], newPositions[1]) - Vector2.Distance(lastZoomPositions[0], lastZoomPositions[1]);
-                    this.GetComponent<Camera>().orthographicSize = Mathf.Clamp(GetComponent<Camera>().orthographicSize - offset, 6f, 800f);
+                    this.GetComponent<Camera>().orthographicSize = Mathf.Clamp(GetComponent<Camera>().orthographicSize - (offset/2f), 6f, 880f);
                     if (OverlayInteractor.gameObject.activeSelf) OverlayInteractor.Resize();
                     lastZoomPositions = newPositions;
                     Interactor.PanTutorial();
@@ -88,7 +88,7 @@ public class CameraController : MonoBehaviour {
             } else {
                 wasZoomingLastFrame = false;
             }
-            if(Input.GetMouseButtonDown(0) && OverlayInteractor.gameObject.activeSelf == false )
+            if(Input.GetMouseButtonDown(0) && OverlayInteractor.gameObject.activeSelf == false)
             {
                 bDragging = true;
                 oldPos = transform.position;
@@ -101,7 +101,7 @@ public class CameraController : MonoBehaviour {
                 //Get the difference between where the mouse clicked and where it moved
                 Vector3 pos = Camera.main.ScreenToViewportPoint(Input.mousePosition) - panOrigin;    
                 //Move the position of the camera to simulate a drag, speed * 10 for screen to worldspace conversion
-                transform.position = new Vector3(oldPos.x + -pos.x * GetComponent<Camera>().orthographicSize, oldPos.y + -pos.y * GetComponent<Camera>().orthographicSize * 2f, -10f);   
+                transform.position = new Vector3(oldPos.x + -pos.x * GetComponent<Camera>().orthographicSize * 2f, oldPos.y + -pos.y * GetComponent<Camera>().orthographicSize * 2f, -10f);   
             }
             if(Input.GetMouseButtonUp(0) && bDragging)
             {
