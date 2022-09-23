@@ -11554,6 +11554,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1859602133}
+  - component: {fileID: 1859602134}
   m_Layer: 0
   m_Name: World
   m_TagString: Untagged
@@ -11575,6 +11576,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1859602134
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1859602132}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d43b9237b2d247442a34c79cd4f3f2a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  explosions: []
+  explosion_prefab: {fileID: 197393248728540889, guid: c7e233ac81bff134fb46f505fa5858df, type: 3}
+  explosion_cache_size: 100
 --- !u!1 &1860665819
 GameObject:
   m_ObjectHideFlags: 0
