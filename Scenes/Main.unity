@@ -730,7 +730,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 146502591}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Rotator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1120,7 +1120,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9119799471000701731, guid: dc04ca45be4f5d943951aca67a713da2, type: 3}
       propertyPath: m_Layer
-      value: 3
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dc04ca45be4f5d943951aca67a713da2, type: 3}
@@ -2985,7 +2985,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6258904477058048182, guid: f1cf176e47a0e6849894859c25ed0c92, type: 3}
       propertyPath: m_Layer
-      value: 3
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6258904477058048182, guid: f1cf176e47a0e6849894859c25ed0c92, type: 3}
       propertyPath: m_IsActive
@@ -3244,7 +3244,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8721200378412927844, guid: 69f0ff434d6df614bb624ff7f3c4ce0f, type: 3}
       propertyPath: m_Layer
-      value: 3
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 69f0ff434d6df614bb624ff7f3c4ce0f, type: 3}
@@ -4880,7 +4880,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1846919199323598364, guid: 84d9a2d7b0fd4e149822e067662aec8e, type: 3}
       propertyPath: m_Layer
-      value: 3
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4830809798732037282, guid: 84d9a2d7b0fd4e149822e067662aec8e, type: 3}
       propertyPath: m_SpriteTilingProperty.newSize.y
@@ -5144,7 +5144,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6258904477058048182, guid: f1cf176e47a0e6849894859c25ed0c92, type: 3}
       propertyPath: m_Layer
-      value: 3
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f1cf176e47a0e6849894859c25ed0c92, type: 3}
@@ -5697,7 +5697,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1846919199323598364, guid: 84d9a2d7b0fd4e149822e067662aec8e, type: 3}
       propertyPath: m_Layer
-      value: 3
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1846919199323598364, guid: 84d9a2d7b0fd4e149822e067662aec8e, type: 3}
       propertyPath: m_IsActive
@@ -6273,7 +6273,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8266058473592499795, guid: f580fe6b5f215744fa0454c145cb3e1b, type: 3}
       propertyPath: m_Layer
-      value: 3
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8266058473592499806, guid: f580fe6b5f215744fa0454c145cb3e1b, type: 3}
       propertyPath: m_RootOrder
@@ -7414,7 +7414,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1953694855423057548, guid: c7c56f03998ec34459311f411d8eb154, type: 3}
       propertyPath: m_Layer
-      value: 3
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1953694855423057548, guid: c7c56f03998ec34459311f411d8eb154, type: 3}
       propertyPath: m_IsActive
@@ -7422,7 +7422,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4014729094875030951, guid: c7c56f03998ec34459311f411d8eb154, type: 3}
       propertyPath: m_Layer
-      value: 3
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4014729094875030951, guid: c7c56f03998ec34459311f411d8eb154, type: 3}
       propertyPath: m_IsActive
@@ -10458,7 +10458,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 953175894827133546, guid: 8a006d32e7855fc4092004594d7060c1, type: 3}
       propertyPath: m_Layer
-      value: 3
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8a006d32e7855fc4092004594d7060c1, type: 3}
@@ -11025,7 +11025,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1701395965}
   - component: {fileID: 1701395964}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Example
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11058,7 +11058,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1701395963}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -2, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 981676401}
@@ -13405,7 +13405,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 953175894827133546, guid: 8a006d32e7855fc4092004594d7060c1, type: 3}
       propertyPath: m_Layer
-      value: 3
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8a006d32e7855fc4092004594d7060c1, type: 3}
