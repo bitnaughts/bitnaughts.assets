@@ -80,33 +80,33 @@ public class CameraController : MonoBehaviour {
                     lastZoomPositions = newPositions;
                 } else {
                     float offset = Vector2.Distance(newPositions[0], newPositions[1]) - Vector2.Distance(lastZoomPositions[0], lastZoomPositions[1]);
-                    this.GetComponent<Camera>().orthographicSize = Mathf.Clamp(GetComponent<Camera>().orthographicSize - (offset/2f), 6f, 880f);
+                    this.GetComponent<Camera>().orthographicSize = Mathf.Clamp(GetComponent<Camera>().orthographicSize - (offset/10f), 6f, 880f);
                     if (OverlayInteractor.gameObject.activeSelf) OverlayInteractor.Resize();
                     lastZoomPositions = newPositions;
                     Interactor.PanTutorial();
                 }
             } else {
                 wasZoomingLastFrame = false;
-            }
-            if(Input.GetMouseButtonDown(0) && OverlayInteractor.gameObject.activeSelf == false)
-            {
-                bDragging = true;
-                oldPos = transform.position;
-                //Get the ScreenVector the mouse clicked
-                //https://answers.unity.com/questions/827834/click-and-drag-camera.html#:~:text=Click%20and%20Drag%20Camera%20-%20Unity%20Answers%20void,%2F%2FGet%20the%20ScreenVector%20the%20mouse%20clicked%20%7D%20if%28Input.GetMouseButton%280%29%29
-                panOrigin = Camera.main.ScreenToViewportPoint(Input.mousePosition);
-            }
-            if(Input.GetMouseButton(0) && OverlayInteractor.gameObject.activeSelf == false && bDragging)
-            {
-                //Get the difference between where the mouse clicked and where it moved
-                Vector3 pos = Camera.main.ScreenToViewportPoint(Input.mousePosition) - panOrigin;    
-                //Move the position of the camera to simulate a drag, speed * 10 for screen to worldspace conversion
-                transform.position = new Vector3(oldPos.x + -pos.x * GetComponent<Camera>().orthographicSize * 2f, oldPos.y + -pos.y * GetComponent<Camera>().orthographicSize * 2f, -10f);   
-            }
-            if(Input.GetMouseButtonUp(0) && bDragging)
-            {
-                Interactor.PanTutorial();
-                bDragging = false;
+                if(Input.GetMouseButtonDown(0) && OverlayInteractor.gameObject.activeSelf == false)
+                {
+                    bDragging = true;
+                    oldPos = transform.position;
+                    //Get the ScreenVector the mouse clicked
+                    //https://answers.unity.com/questions/827834/click-and-drag-camera.html#:~:text=Click%20and%20Drag%20Camera%20-%20Unity%20Answers%20void,%2F%2FGet%20the%20ScreenVector%20the%20mouse%20clicked%20%7D%20if%28Input.GetMouseButton%280%29%29
+                    panOrigin = Camera.main.ScreenToViewportPoint(Input.mousePosition);
+                }
+                if(Input.GetMouseButton(0) && OverlayInteractor.gameObject.activeSelf == false && bDragging)
+                {
+                    //Get the difference between where the mouse clicked and where it moved
+                    Vector3 pos = Camera.main.ScreenToViewportPoint(Input.mousePosition) - panOrigin;    
+                    //Move the position of the camera to simulate a drag, speed * 10 for screen to worldspace conversion
+                    transform.position = new Vector3(oldPos.x + -pos.x * GetComponent<Camera>().orthographicSize * 2f, oldPos.y + -pos.y * GetComponent<Camera>().orthographicSize * 2f, -10f);   
+                }
+                if(Input.GetMouseButtonUp(0) && bDragging)
+                {
+                    Interactor.PanTutorial();
+                    bDragging = false;
+                }
             }
         }
     }
