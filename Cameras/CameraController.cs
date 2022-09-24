@@ -28,7 +28,7 @@ public class CameraController : MonoBehaviour {
         camera = this.GetComponent<Camera>();
         // focus = GameObject.Find("Station");
         // cursor = GameObject.Find("Cursor");
-        // example = GameObject.Find("Example");
+        example = GameObject.Find("Example");
         // example.SetActive(false);
     }
 
@@ -98,7 +98,7 @@ public class CameraController : MonoBehaviour {
                 if(Input.GetMouseButton(0) && OverlayInteractor.gameObject.activeSelf == false && bDragging)
                 {
                     //Get the difference between where the mouse clicked and where it moved
-                    Vector3 pos = Camera.main.ScreenToViewportPoint(Input.mousePosition) - panOrigin;    
+                    Vector3 pos = Camera.main.ScreenToViewportPoint(Input.mousePosition) - panOrigin;// + new Vector3(example.GetComponent<StructureController>().translation.x * Time.deltaTime, example.GetComponent<StructureController>().translation.y * Time.deltaTime, 0);    
                     //Move the position of the camera to simulate a drag, speed * 10 for screen to worldspace conversion
                     transform.position = new Vector3(oldPos.x + -pos.x * GetComponent<Camera>().orthographicSize * 2f, oldPos.y + -pos.y * GetComponent<Camera>().orthographicSize * 2f, -10f);   
                 }
