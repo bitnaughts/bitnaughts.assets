@@ -60,7 +60,7 @@ public class CameraController : MonoBehaviour {
         OverlayInteractor.OnDropdownChange();
         Interactor.Sound("Toggle");
     }
-
+    float delay_after_zoom = 0;
     void LateUpdate()
     {
         if (CheckInsideEdge())
@@ -74,6 +74,7 @@ public class CameraController : MonoBehaviour {
                 }
             }
             if (Input.touchCount == 2) {
+                delay_after_zoom = .1f;
                 Vector2[] newPositions = new Vector2[]{Input.GetTouch(0).position, Input.GetTouch(1).position};
                 if (!wasZoomingLastFrame) {
                     wasZoomingLastFrame = true;
@@ -87,25 +88,31 @@ public class CameraController : MonoBehaviour {
                 }
             } else {
                 wasZoomingLastFrame = false;
-                if(Input.GetMouseButtonDown(0) && OverlayInteractor.gameObject.activeSelf == false)
-                {
-                    bDragging = true;
+                if (delay_after_zoom > 0) {
+                    delay_after_zoom -= Time.deltaTime;
                     oldPos = transform.position;
-                    //Get the ScreenVector the mouse clicked
-                    //https://answers.unity.com/questions/827834/click-and-drag-camera.html#:~:text=Click%20and%20Drag%20Camera%20-%20Unity%20Answers%20void,%2F%2FGet%20the%20ScreenVector%20the%20mouse%20clicked%20%7D%20if%28Input.GetMouseButton%280%29%29
                     panOrigin = Camera.main.ScreenToViewportPoint(Input.mousePosition);
-                }
-                if(Input.GetMouseButton(0) && OverlayInteractor.gameObject.activeSelf == false && bDragging)
-                {
-                    //Get the difference between where the mouse clicked and where it moved
-                    Vector3 pos = Camera.main.ScreenToViewportPoint(Input.mousePosition) - panOrigin;// + new Vector3(example.GetComponent<StructureController>().translation.x * Time.deltaTime, example.GetComponent<StructureController>().translation.y * Time.deltaTime, 0);    
-                    //Move the position of the camera to simulate a drag, speed * 10 for screen to worldspace conversion
-                    transform.position = new Vector3(oldPos.x + -pos.x * GetComponent<Camera>().orthographicSize * 2f, oldPos.y + -pos.y * GetComponent<Camera>().orthographicSize * 2f, -10f);   
-                }
-                if(Input.GetMouseButtonUp(0) && bDragging)
-                {
-                    Interactor.PanTutorial();
-                    bDragging = false;
+                } else {
+                    if(Input.GetMouseButtonDown(0) && OverlayInteractor.gameObject.activeSelf == false)
+                    {
+                        bDragging = true;
+                        oldPos = transform.position;
+                        //Get the ScreenVector the mouse clicked
+                        //https://answers.unity.com/questions/827834/click-and-drag-camera.html#:~:text=Click%20and%20Drag%20Camera%20-%20Unity%20Answers%20void,%2F%2FGet%20the%20ScreenVector%20the%20mouse%20clicked%20%7D%20if%28Input.GetMouseButton%280%29%29
+                        panOrigin = Camera.main.ScreenToViewportPoint(Input.mousePosition);
+                    }
+                    if(Input.GetMouseButton(0) && OverlayInteractor.gameObject.activeSelf == false && bDragging)
+                    {
+                        //Get the difference between where the mouse clicked and where it moved
+                        Vector3 pos = Camera.main.ScreenToViewportPoint(Input.mousePosition) - panOrigin;// + new Vector3(example.GetComponent<StructureController>().translation.x * Time.deltaTime, example.GetComponent<StructureController>().translation.y * Time.deltaTime, 0);    
+                        //Move the position of the camera to simulate a drag, speed * 10 for screen to worldspace conversion
+                        transform.position = new Vector3(oldPos.x + -pos.x * GetComponent<Camera>().orthographicSize * 2f, oldPos.y + -pos.y * GetComponent<Camera>().orthographicSize * 2f, -10f);   
+                    }
+                    if(Input.GetMouseButtonUp(0) && bDragging)
+                    {
+                        Interactor.PanTutorial();
+                        bDragging = false;
+                    }
                 }
             }
         }
