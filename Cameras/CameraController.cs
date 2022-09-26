@@ -63,6 +63,13 @@ public class CameraController : MonoBehaviour {
     float delay_after_zoom = 0;
     void LateUpdate()
     {
+        if (Input.GetKeyDown(KeyCode.Space)) {
+            Interactor.Sound("Toggle");
+            this.transform.SetParent(GameObject.Find("World").GetComponentsInChildren<StructureController>()[0].transform);
+            this.transform.localPosition = new Vector3(0, 0, -200);
+            this.transform.localEulerAngles = new Vector3(0, 0, 0);
+
+        }
         if (CheckInsideEdge())
         {
             if (Input.GetAxis("Mouse ScrollWheel") != 0) {
