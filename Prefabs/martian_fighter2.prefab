@@ -130,6 +130,7 @@ MonoBehaviour:
   Explosion: {fileID: 0}
   Launched: 0
   explosion_timer: 0
+  Hitpoints: 1
 --- !u!199 &2022106779065042197
 ParticleSystemRenderer:
   serializedVersion: 6

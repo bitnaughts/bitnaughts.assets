@@ -130,6 +130,7 @@ MonoBehaviour:
   Explosion: {fileID: 0}
   Launched: 0
   explosion_timer: 0
+  Hitpoints: 60
 --- !u!1 &6761308509941136216
 GameObject:
   m_ObjectHideFlags: 0
