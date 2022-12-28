@@ -29,6 +29,7 @@ public class CameraController : MonoBehaviour {
         // focus = GameObject.Find("Station");
         // cursor = GameObject.Find("Cursor");
         example = GameObject.Find("Example");
+        Interactor = GameObject.Find("ScreenCanvas").GetComponent<Interactor>();
         // example.SetActive(false);
     }
 
@@ -43,7 +44,7 @@ public class CameraController : MonoBehaviour {
     float timer = 0f;
 
     bool CheckInsideEdge() {
-        return (Input.mousePosition.y > 60 && Input.mousePosition.y < Screen.height - 60 && Input.mousePosition.x > Screen.width / 2 && Input.mousePosition.x < Screen.width - 60);
+        return (Input.mousePosition.y > 60 && Input.mousePosition.y < Screen.height - 60 && Input.mousePosition.x > 60 && Input.mousePosition.x < Screen.width - 60);
     }
     int component = 0;
     public void ToggleView() {
@@ -74,7 +75,7 @@ public class CameraController : MonoBehaviour {
         {
             if (Input.GetAxis("Mouse ScrollWheel") != 0) {
                 if (GameObject.Find("Dropdown List") == null) { // && EventSystem.current.currentSelectedGameObject == null
-                    GetComponent<Camera>().orthographicSize = Mathf.Clamp(GetComponent<Camera>().orthographicSize - Input.GetAxis("Mouse ScrollWheel") * GetComponent<Camera>().orthographicSize, 6f, 880f);
+                    GetComponent<Camera>().orthographicSize = Mathf.Clamp(GetComponent<Camera>().orthographicSize - Input.GetAxis("Mouse ScrollWheel") * GetComponent<Camera>().orthographicSize, 6f, 350f);
                     if (OverlayInteractor.gameObject.activeSelf) OverlayInteractor.Resize();
                     
                     Interactor.PanTutorial();
@@ -88,7 +89,7 @@ public class CameraController : MonoBehaviour {
                     lastZoomPositions = newPositions;
                 } else {
                     float offset = Vector2.Distance(newPositions[0], newPositions[1]) - Vector2.Distance(lastZoomPositions[0], lastZoomPositions[1]);
-                    this.GetComponent<Camera>().orthographicSize = Mathf.Clamp(GetComponent<Camera>().orthographicSize - (offset/10f), 6f, 880f);
+                    this.GetComponent<Camera>().orthographicSize = Mathf.Clamp(GetComponent<Camera>().orthographicSize - (offset/10f), 6f, 350f);
                     if (OverlayInteractor.gameObject.activeSelf) OverlayInteractor.Resize();
                     lastZoomPositions = newPositions;
                     Interactor.PanTutorial();
