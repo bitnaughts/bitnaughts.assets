@@ -592,7 +592,7 @@ GameObject:
   m_Component:
   - component: {fileID: 69297782}
   m_Layer: 0
-  m_Name: CampaignBohrsModel
+  m_Name: CampaignPlanksLaw
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3700,8 +3700,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -109, y: 18}
-  m_SizeDelta: {x: -318, y: 35}
+  m_AnchoredPosition: {x: -121.46942, y: 18}
+  m_SizeDelta: {x: -313.0511, y: 35}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &274523437
 MonoBehaviour:
@@ -7498,7 +7498,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 0, y: -12.0000305}
+  m_AnchoredPosition: {x: 0, y: -12}
   m_SizeDelta: {x: 2, y: 44}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &568371823
@@ -8677,14 +8677,32 @@ MonoBehaviour:
   CampaignNewtonsLaws: {fileID: 437310725}
   CampaignDopplerShift: {fileID: 1087533415}
   CampaignDopplerEffect: {fileID: 195731774}
-  CampaignBohrsModel: {fileID: 69297781}
-  CampaignBentleysParadox: {fileID: 0}
-  CampaignPlanksLaw: {fileID: 0}
-  CampaignPascalsWager: {fileID: 1457849146}
-  CampaignMoracevsParadox: {fileID: 1264226385}
+  CampaignPlanksLaw: {fileID: 69297781}
   CampaignHawkingRadiation: {fileID: 1178056781}
+  CampaignMoracevsParadox: {fileID: 1264226385}
   CampaignDeBroglieTheory: {fileID: 714757578}
   CampaignFermiParadox: {fileID: 1050008261}
+  CampaignPascalsWager: {fileID: 1457849146}
+  SplashScreenNarration: {fileID: 8300000, guid: e38aa6e40b5385c49b8fadbbfb6cf9c5, type: 3}
+  CampaignRadioDaysNarration: {fileID: 8300000, guid: 626e99a82c46daa4cabb0ba53fce4430, type: 3}
+  CampaignNewtonsLawsNarration: {fileID: 8300000, guid: 57da60206302f5d4084596a462b20010, type: 3}
+  CampaignTheAtomNarration: {fileID: 8300000, guid: dd02270a894a9ff49aa0f603c66be054, type: 3}
+  CampaignDopplerShiftNarration: {fileID: 8300000, guid: 0a3d1dd4299d90247b332e36c502e8ad, type: 3}
+  CampaignTheElectronNarration: {fileID: 8300000, guid: 61aa6ba2bd277b14c9cd51a35cf37a44, type: 3}
+  CampaignDopplerEffectNarration: {fileID: 8300000, guid: cb41cb9fdf8dad74194952b01c0da833, type: 3}
+  CampaignModernWarNarration: {fileID: 8300000, guid: d81d2523648b4a54e9f1eaf87c097892, type: 3}
+  CampaignPlanksLawNarration: {fileID: 8300000, guid: 6626adec2bafbca45b379c3da3a71c4f, type: 3}
+  CampaignTelevisionNarration: {fileID: 8300000, guid: ba2af4653d2cc3e4fa52f921f023231f, type: 3}
+  CampaignHawkingRadiationNarration: {fileID: 8300000, guid: a26775aeb44a1a7499fbaafb1c4cff59, type: 3}
+  CampaignVideotapeRecordsNarration: {fileID: 8300000, guid: 6fa6ba6e962379c49bed451d5b1ae2af, type: 3}
+  CampaignMoracevsParadoxNarration: {fileID: 8300000, guid: cc4af536d7371764084b59bda44b8556, type: 3}
+  CampaignElectronicMusicNarration: {fileID: 8300000, guid: 4fa1b217a21981445bbc54e426aba1f3, type: 3}
+  CampaignDeBroglieTheoryNarration: {fileID: 8300000, guid: 0e7704d326c7dfc4683dd37c126d39f9, type: 3}
+  CampaignRadioIsotopesNarration: {fileID: 8300000, guid: 658e7bff4e0a04747aa8d5891a5acd51, type: 3}
+  CampaignFermiParadoxNarration: {fileID: 8300000, guid: 08b198c41604ca049855a8fbbfc33a84, type: 3}
+  CampaignHardnessTestNarration: {fileID: 8300000, guid: 8f2d34fa20fc05c48925b6483dd8e9a8, type: 3}
+  CampaignPascalsWagerNarration: {fileID: 8300000, guid: eef900c2265888d4db9b7d48edbabfb8, type: 3}
+  CampaignConclusionNarration: {fileID: 8300000, guid: a45a14afbe6e8d94180c8a4c0b7ce20a, type: 3}
   Content: {fileID: 1371679304}
   InterpreterPanel: {fileID: 406250311}
   InterpreterPanelEdge: {fileID: 0}
@@ -8757,6 +8775,7 @@ MonoBehaviour:
   SplitTimer: {fileID: 304609524}
   SplitTimerShadow: {fileID: 1589390126}
   ButtonsCache: []
+  clip_queue: {fileID: 0}
   component_name: 
   component_text: 
 --- !u!1 &655974284
