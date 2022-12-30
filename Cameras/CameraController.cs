@@ -56,7 +56,7 @@ public class CameraController : MonoBehaviour {
             if (OverlayInteractor.OverlayDropdown.options[i].text == components[component]) OverlayInteractor.OverlayDropdown.value = i; 
         }
         this.transform.SetParent(GameObject.Find(components[component]).transform);
-        this.transform.position = new Vector3(0, 50, 0);
+        this.transform.position = new Vector3(0, -100, 0);
         this.transform.localEulerAngles = new Vector3(0, 0, 0);
         OverlayInteractor.OnDropdownChange();
         Interactor.Sound("Toggle");
@@ -67,7 +67,7 @@ public class CameraController : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.Space)) {
             Interactor.Sound("Toggle");
             this.transform.SetParent(GameObject.Find("World").GetComponentsInChildren<StructureController>()[0].transform);
-            this.transform.position = new Vector3(0, 0, 50);
+            this.transform.position = new Vector3(0, -100, 0);
             this.transform.localEulerAngles = new Vector3(0, 0, 0);
 
         }

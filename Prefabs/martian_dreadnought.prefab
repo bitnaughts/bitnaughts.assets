@@ -4826,8 +4826,8 @@ GameObject:
   m_Component:
   - component: {fileID: 3147794773494757170}
   - component: {fileID: 3147794773494757171}
-  - component: {fileID: 3147794773494757168}
   - component: {fileID: 3147794773494757169}
+  - component: {fileID: -5589540040183079871}
   m_Layer: 3
   m_Name: martian_dreadnought
   m_TagString: Untagged
@@ -4903,32 +4903,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!61 &3147794773494757168
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3147794773494757172}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 39, y: 52.3}
-    newSize: {x: 10.540541, y: 14.135135}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 39, y: 52.3}
-  m_EdgeRadius: 0
 --- !u!114 &3147794773494757169
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4942,12 +4916,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isAi: 1
-  translation: {x: 0, y: 0}
+  translation: {x: 0, y: 0, z: 0}
   average_rotation: 0
   Explosion: {fileID: 0}
   Launched: 0
   explosion_timer: 0
   Hitpoints: 200
+--- !u!65 &-5589540040183079871
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3147794773494757172}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 39, y: 52.3, z: 1000}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &4497318235393177366
 GameObject:
   m_ObjectHideFlags: 0
