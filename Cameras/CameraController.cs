@@ -56,7 +56,7 @@ public class CameraController : MonoBehaviour {
             if (OverlayInteractor.OverlayDropdown.options[i].text == components[component]) OverlayInteractor.OverlayDropdown.value = i; 
         }
         this.transform.SetParent(GameObject.Find(components[component]).transform);
-        this.transform.localPosition = new Vector3(0, 0, -200);
+        this.transform.position = new Vector3(0, 50, 0);
         this.transform.localEulerAngles = new Vector3(0, 0, 0);
         OverlayInteractor.OnDropdownChange();
         Interactor.Sound("Toggle");
@@ -67,7 +67,7 @@ public class CameraController : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.Space)) {
             Interactor.Sound("Toggle");
             this.transform.SetParent(GameObject.Find("World").GetComponentsInChildren<StructureController>()[0].transform);
-            this.transform.localPosition = new Vector3(0, 0, -200);
+            this.transform.position = new Vector3(0, 0, 50);
             this.transform.localEulerAngles = new Vector3(0, 0, 0);
 
         }
@@ -75,7 +75,7 @@ public class CameraController : MonoBehaviour {
         {
             if (Input.GetAxis("Mouse ScrollWheel") != 0) {
                 if (GameObject.Find("Dropdown List") == null) { // && EventSystem.current.currentSelectedGameObject == null
-                    GetComponent<Camera>().orthographicSize = Mathf.Clamp(GetComponent<Camera>().orthographicSize - Input.GetAxis("Mouse ScrollWheel") * GetComponent<Camera>().orthographicSize, 6f, 350f);
+                    GetComponent<Camera>().orthographicSize = Mathf.Clamp(GetComponent<Camera>().orthographicSize - Input.GetAxis("Mouse ScrollWheel") * GetComponent<Camera>().orthographicSize, 6f, 170f);
                     if (OverlayInteractor.gameObject.activeSelf) OverlayInteractor.Resize();
                     
                     Interactor.PanTutorial();
@@ -89,7 +89,7 @@ public class CameraController : MonoBehaviour {
                     lastZoomPositions = newPositions;
                 } else {
                     float offset = Vector2.Distance(newPositions[0], newPositions[1]) - Vector2.Distance(lastZoomPositions[0], lastZoomPositions[1]);
-                    this.GetComponent<Camera>().orthographicSize = Mathf.Clamp(GetComponent<Camera>().orthographicSize - (offset/10f), 6f, 350f);
+                    this.GetComponent<Camera>().orthographicSize = Mathf.Clamp(GetComponent<Camera>().orthographicSize - (offset/10f), 6f, 170f);
                     if (OverlayInteractor.gameObject.activeSelf) OverlayInteractor.Resize();
                     lastZoomPositions = newPositions;
                     Interactor.PanTutorial();
@@ -114,7 +114,9 @@ public class CameraController : MonoBehaviour {
                         //Get the difference between where the mouse clicked and where it moved
                         Vector3 pos = Camera.main.ScreenToViewportPoint(Input.mousePosition) - panOrigin;// + new Vector3(example.GetComponent<StructureController>().translation.x * Time.deltaTime, example.GetComponent<StructureController>().translation.y * Time.deltaTime, 0);    
                         //Move the position of the camera to simulate a drag, speed * 10 for screen to worldspace conversion
-                        transform.position = new Vector3(oldPos.x + -pos.x * GetComponent<Camera>().orthographicSize * 2f, oldPos.y + -pos.y * GetComponent<Camera>().orthographicSize * 2f, -10f);   
+                        // transform.position = new Vector3(oldPos.x + -pos.x * GetComponent<Camera>().orthographicSize * 2f, 100, oldPos.y + -pos.y * GetComponent<Camera>().orthographicSize * 2f);   
+                        transform.Translate(new Vector3(-pos.x * GetComponent<Camera>().orthographicSize * 2f, -pos.y * GetComponent<Camera>().orthographicSize * 2f, 0)); 
+                        panOrigin = Camera.main.ScreenToViewportPoint(Input.mousePosition);
                     }
                     if(Input.GetMouseButtonUp(0) && bDragging)
                     {
