@@ -44,7 +44,7 @@ public class CameraController : MonoBehaviour {
     float timer = 0f;
 
     bool CheckInsideEdge() {
-        return (Input.mousePosition.y > 60 && Input.mousePosition.y < Screen.height - 60 && Input.mousePosition.x > 60 && Input.mousePosition.x < Screen.width - 60);
+        return (Input.mousePosition.y > 100 && Input.mousePosition.y < Screen.height - 100 && Input.mousePosition.x > 100 && Input.mousePosition.x < Screen.width - 100);
     }
     int component = 0;
     public void ToggleView() {
