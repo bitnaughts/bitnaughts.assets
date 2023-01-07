@@ -1,0 +1,20 @@
+we interrupt this program to bring you special news bulletin.
+a state of emergency has been declared by the president of the united states.
+we're switching live to wilsens glenn, New Jersey.
+where the landing of hundreds of unidentified spacecraft has now been officially confirmed as a full-scale invasion of the earth by martians.
+they're attacking the navigation satellites.
+te need to defend the satellites at all costs.
+if the geodetic grid goes down, all lines of communication will be severed.
+martian drone fighters operate with autonomous instruction sets. 
+select a fighter to see its program.
+these drones are small, but their plasma cannons can still knock out vital satellite components.
+they are coming right at you.
+fire your weapons to take out the Martian drones.
+well done.
+oh no.
+a stray neutrino has corrupted the thruster code.
+select the processor to edit the satellite program.
+in the main method, add the function call to the thruster object.
+the function parameters can be user input or automated in the future.
+great, now fly the satellite to the next navigation satellite, its under attack.
+
