@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
 using UnityEngine.Rendering;
@@ -44,7 +45,9 @@ public class CameraController : MonoBehaviour {
     float timer = 0f;
 
     bool CheckInsideEdge() {
-        return (Input.mousePosition.y > 100 && Input.mousePosition.y < Screen.height - 100 && Input.mousePosition.x > 100 && Input.mousePosition.x < Screen.width - 100);
+        return (Input.mousePosition.y > 114 && Input.mousePosition.y < Screen.height - 150 && Input.mousePosition.x > 114 && Input.mousePosition.x < Screen.width - 114)
+        && !(Input.mousePosition.y < 725 && Input.mousePosition.y > 175 && Input.mousePosition.x < Screen.width - 175 && Input.mousePosition.x > Screen.width - 725)
+        && !(Input.mousePosition.y < 725 && Input.mousePosition.y > 175 && Input.mousePosition.x > 175 && Input.mousePosition.x < 725); //175 to 725 from bottom left and right corners for Joystick/use weapon input for tutorial
     }
     int component = 0;
     public void ToggleView() {
@@ -75,7 +78,7 @@ public class CameraController : MonoBehaviour {
         {
             if (Input.GetAxis("Mouse ScrollWheel") != 0) {
                 if (GameObject.Find("Dropdown List") == null) { // && EventSystem.current.currentSelectedGameObject == null
-                    GetComponent<Camera>().orthographicSize = Mathf.Clamp(GetComponent<Camera>().orthographicSize - Input.GetAxis("Mouse ScrollWheel") * GetComponent<Camera>().orthographicSize, 4f, 370f);
+                    GetComponent<Camera>().orthographicSize = Mathf.Clamp(GetComponent<Camera>().orthographicSize - Input.GetAxis("Mouse ScrollWheel") * GetComponent<Camera>().orthographicSize, 6f, 250f);
                     if (OverlayInteractor.gameObject.activeSelf) OverlayInteractor.Resize();
                     
                     Interactor.PanTutorial();
@@ -89,7 +92,7 @@ public class CameraController : MonoBehaviour {
                     lastZoomPositions = newPositions;
                 } else {
                     float offset = Vector2.Distance(newPositions[0], newPositions[1]) - Vector2.Distance(lastZoomPositions[0], lastZoomPositions[1]);
-                    this.GetComponent<Camera>().orthographicSize = Mathf.Clamp(GetComponent<Camera>().orthographicSize - (offset/10f), 4f, 370f);
+                    this.GetComponent<Camera>().orthographicSize = Mathf.Clamp(GetComponent<Camera>().orthographicSize - (offset/10f), 6f, 250f);
                     if (OverlayInteractor.gameObject.activeSelf) OverlayInteractor.Resize();
                     lastZoomPositions = newPositions;
                     Interactor.PanTutorial();
@@ -127,11 +130,37 @@ public class CameraController : MonoBehaviour {
             }
         }
     }
+    int cycle_count = 1;
+    public void CycleView() {
+        this.transform.SetParent(GameObject.Find("World").GetComponentsInChildren<StructureController>()[cycle_count++ % GameObject.Find("World").GetComponentsInChildren<StructureController>().Length].transform);
+        this.transform.localPosition = new Vector3(0, 0, -200);
+        this.transform.localEulerAngles = new Vector3(0, 0, 0);
+        GameObject.Find("BinocularToggleText").GetComponent<Text>().text = "⛭";
+       Interactor.CycleTutorial();
+    }
+    public void BinocularView() {
+        if (GameObject.Find("BinocularToggleText")) {
+            if (GameObject.Find("BinocularToggleText").GetComponent<Text>().text == "⛯") {
+                GameObject.Find("BinocularToggleText").GetComponent<Text>().text = "⛭";
+                this.transform.SetParent(GameObject.Find("Example").transform);
+                this.transform.localEulerAngles = new Vector3(0, 0, 0);
+                this.transform.localPosition = new Vector3(0, 0, -200);
+            } else {
+                GameObject.Find("BinocularToggleText").GetComponent<Text>().text = "⛯";
+                this.transform.SetParent(GameObject.Find("Example").transform.GetChild(0).transform);
+                this.transform.localEulerAngles = new Vector3(0, 0, 0);
+                this.transform.localPosition = new Vector3(0, 0, -200);
+            }
+        }
+       Interactor.BinocularTutorial();
+    }
     public void ZoomIn() {
-        if (camera.orthographicSize > 24) camera.orthographicSize -= 20;
+        Interactor.PanTutorial();
+        camera.orthographicSize = Mathf.Clamp(camera.orthographicSize - 0.5f * GetComponent<Camera>().orthographicSize, 6f, 250f);
     }
     public void ZoomOut() {
-        camera.orthographicSize += 20;
+        camera.orthographicSize = Mathf.Clamp(camera.orthographicSize + 0.5f * GetComponent<Camera>().orthographicSize, 6f, 250f);
+        Interactor.PanTutorial();
     }
     public void OnPanUp() {
         Interactor.Sound("Click");
