@@ -46,8 +46,8 @@ public class CameraController : MonoBehaviour {
 
     bool CheckInsideEdge() {
         return (Input.mousePosition.y > 114 && Input.mousePosition.y < Screen.height - 150 && Input.mousePosition.x > 114 && Input.mousePosition.x < Screen.width - 114)
-        && !(Input.mousePosition.y < 725 && Input.mousePosition.y > 175 && Input.mousePosition.x < Screen.width - 175 && Input.mousePosition.x > Screen.width - 725)
-        && !(Input.mousePosition.y < 725 && Input.mousePosition.y > 175 && Input.mousePosition.x > 175 && Input.mousePosition.x < 725); //175 to 725 from bottom left and right corners for Joystick/use weapon input for tutorial
+        && !(Input.mousePosition.y < 535 && Input.mousePosition.y > 265 && Input.mousePosition.x < Screen.width - 265 && Input.mousePosition.x > Screen.width - 535)
+        && !(Input.mousePosition.y < 535 && Input.mousePosition.y > 265 && Input.mousePosition.x > 265 && Input.mousePosition.x < 535); //175 to 725 from bottom left and right corners for Joystick/use weapon input for tutorial
     }
     int component = 0;
     public void ToggleView() {
@@ -61,30 +61,29 @@ public class CameraController : MonoBehaviour {
         this.transform.SetParent(GameObject.Find(components[component]).transform);
         this.transform.position = new Vector3(0, -100, 0);
         this.transform.localEulerAngles = new Vector3(0, 0, 0);
-        OverlayInteractor.OnDropdownChange();
+        OverlayInteractor.OnDropdownChange("");
         Interactor.Sound("Toggle");
     }
     float delay_after_zoom = 0;
     void LateUpdate()
     {
-        if (Input.GetKeyDown(KeyCode.Space)) {
-            Interactor.Sound("Toggle");
-            this.transform.SetParent(GameObject.Find("World").GetComponentsInChildren<StructureController>()[0].transform);
-            this.transform.position = new Vector3(0, -100, 0);
-            this.transform.localEulerAngles = new Vector3(0, 0, 0);
-
-        }
+        // if (Input.GetKeyDown(KeyCode.Space)) {
+        //     Interactor.Sound("Toggle");
+        //     this.transform.SetParent(GameObject.Find("World").GetComponentsInChildren<StructureController>()[0].transform);
+        //     this.transform.position = new Vector3(0, -100, 0);
+        //     this.transform.localEulerAngles = new Vector3(0, 0, 0);
+        // }
         if (CheckInsideEdge())
         {
-            if (Input.GetAxis("Mouse ScrollWheel") != 0) {
+            if (Input.GetAxis("Mouse ScrollWheel") != 0 && Interactor.Stage != "MapInterface") {
                 if (GameObject.Find("Dropdown List") == null) { // && EventSystem.current.currentSelectedGameObject == null
-                    GetComponent<Camera>().orthographicSize = Mathf.Clamp(GetComponent<Camera>().orthographicSize - Input.GetAxis("Mouse ScrollWheel") * GetComponent<Camera>().orthographicSize, 6f, 250f);
+                    GetComponent<Camera>().orthographicSize = Mathf.Clamp(GetComponent<Camera>().orthographicSize - Input.GetAxis("Mouse ScrollWheel") * GetComponent<Camera>().orthographicSize, 6f, 100f);
                     if (OverlayInteractor.gameObject.activeSelf) OverlayInteractor.Resize();
                     
                     Interactor.PanTutorial();
                 }
             }
-            if (Input.touchCount == 2) {
+            if (Input.touchCount == 2 && Interactor.Stage != "MapInterface") {
                 delay_after_zoom = .1f;
                 Vector2[] newPositions = new Vector2[]{Input.GetTouch(0).position, Input.GetTouch(1).position};
                 if (!wasZoomingLastFrame) {
@@ -92,7 +91,7 @@ public class CameraController : MonoBehaviour {
                     lastZoomPositions = newPositions;
                 } else {
                     float offset = Vector2.Distance(newPositions[0], newPositions[1]) - Vector2.Distance(lastZoomPositions[0], lastZoomPositions[1]);
-                    this.GetComponent<Camera>().orthographicSize = Mathf.Clamp(GetComponent<Camera>().orthographicSize - (offset/10f), 6f, 250f);
+                    this.GetComponent<Camera>().orthographicSize = Mathf.Clamp(GetComponent<Camera>().orthographicSize - (offset/10f), 6f, 100f);
                     if (OverlayInteractor.gameObject.activeSelf) OverlayInteractor.Resize();
                     lastZoomPositions = newPositions;
                     Interactor.PanTutorial();
@@ -118,7 +117,7 @@ public class CameraController : MonoBehaviour {
                         Vector3 pos = Camera.main.ScreenToViewportPoint(Input.mousePosition) - panOrigin;// + new Vector3(example.GetComponent<StructureController>().translation.x * Time.deltaTime, example.GetComponent<StructureController>().translation.y * Time.deltaTime, 0);    
                         //Move the position of the camera to simulate a drag, speed * 10 for screen to worldspace conversion
                         // transform.position = new Vector3(oldPos.x + -pos.x * GetComponent<Camera>().orthographicSize * 2f, 100, oldPos.y + -pos.y * GetComponent<Camera>().orthographicSize * 2f);   
-                        transform.Translate(new Vector3(-pos.x * GetComponent<Camera>().orthographicSize * 2f, -pos.y * GetComponent<Camera>().orthographicSize * 2f, 0)); 
+                        transform.Translate(new Vector3(Mathf.Clamp(-pos.x * GetComponent<Camera>().orthographicSize * 2f, -GetComponent<Camera>().orthographicSize * 2f, GetComponent<Camera>().orthographicSize * 2f), Mathf.Clamp(-pos.y * GetComponent<Camera>().orthographicSize * 2f, -GetComponent<Camera>().orthographicSize * 2f, GetComponent<Camera>().orthographicSize * 2f), 0)); 
                         panOrigin = Camera.main.ScreenToViewportPoint(Input.mousePosition);
                     }
                     if(Input.GetMouseButtonUp(0) && bDragging)
@@ -132,10 +131,10 @@ public class CameraController : MonoBehaviour {
     }
     int cycle_count = 1;
     public void CycleView() {
-        this.transform.SetParent(GameObject.Find("World").GetComponentsInChildren<StructureController>()[cycle_count++ % GameObject.Find("World").GetComponentsInChildren<StructureController>().Length].transform);
-        this.transform.localPosition = new Vector3(0, 0, -200);
-        this.transform.localEulerAngles = new Vector3(0, 0, 0);
-        GameObject.Find("BinocularToggleText").GetComponent<Text>().text = "⛭";
+       this.transform.SetParent(GameObject.Find("World").GetComponentsInChildren<StructureController>()[cycle_count++ % GameObject.Find("World").GetComponentsInChildren<StructureController>().Length].transform);
+       this.transform.localPosition = new Vector3(0, 0, -200);
+       this.transform.localEulerAngles = new Vector3(0, 0, 0);
+       GameObject.Find("BinocularToggleText").GetComponent<Text>().text = "⛭";
        Interactor.CycleTutorial();
     }
     public void BinocularView() {
@@ -155,12 +154,11 @@ public class CameraController : MonoBehaviour {
        Interactor.BinocularTutorial();
     }
     public void ZoomIn() {
-        Interactor.PanTutorial();
+        Interactor.MapZoom();
         camera.orthographicSize = Mathf.Clamp(camera.orthographicSize - 0.5f * GetComponent<Camera>().orthographicSize, 6f, 250f);
     }
     public void ZoomOut() {
         camera.orthographicSize = Mathf.Clamp(camera.orthographicSize + 0.5f * GetComponent<Camera>().orthographicSize, 6f, 250f);
-        Interactor.PanTutorial();
     }
     public void OnPanUp() {
         Interactor.Sound("Click");
