@@ -18,7 +18,6 @@ public class CameraController : MonoBehaviour {
     GameObject example;
 
     public Interactor Interactor;
-    public OverlayInteractor OverlayInteractor;
 
     float speed = 1f;
     Vector3 panOrigin;
@@ -54,14 +53,14 @@ public class CameraController : MonoBehaviour {
         string[] components = Interactor.Ship.GetInteractiveComponents();
         component = (component + 1) % components.Length;
         Interactor.RenderComponent(components[component]);
-        OverlayInteractor.gameObject.SetActive(true);
-        for (int i = 0; i < OverlayInteractor.OverlayDropdown.options.Count; i++) {
-            if (OverlayInteractor.OverlayDropdown.options[i].text == components[component]) OverlayInteractor.OverlayDropdown.value = i; 
+        Interactor.OverlayInteractor.gameObject.SetActive(true);
+        for (int i = 0; i < Interactor.OverlayInteractor.OverlayDropdown.options.Count; i++) {
+            if (Interactor.OverlayInteractor.OverlayDropdown.options[i].text == components[component]) Interactor.OverlayInteractor.OverlayDropdown.value = i; 
         }
         this.transform.SetParent(GameObject.Find(components[component]).transform);
         this.transform.position = new Vector3(0, -100, 0);
         this.transform.localEulerAngles = new Vector3(0, 0, 0);
-        OverlayInteractor.OnDropdownChange("");
+        Interactor.OverlayInteractor.OnDropdownChange("");
         Interactor.Sound("Toggle");
     }
     float delay_after_zoom = 0;
@@ -73,14 +72,15 @@ public class CameraController : MonoBehaviour {
         //     this.transform.position = new Vector3(0, -100, 0);
         //     this.transform.localEulerAngles = new Vector3(0, 0, 0);
         // }
-        if (CheckInsideEdge())
+        if (CheckInsideEdge() || Interactor.Stage == "MapInterface")
         {
             if (Input.GetAxis("Mouse ScrollWheel") != 0 && Interactor.Stage != "MapInterface") {
                 if (GameObject.Find("Dropdown List") == null) { // && EventSystem.current.currentSelectedGameObject == null
                     GetComponent<Camera>().orthographicSize = Mathf.Clamp(GetComponent<Camera>().orthographicSize - Input.GetAxis("Mouse ScrollWheel") * GetComponent<Camera>().orthographicSize, 6f, 100f);
-                    if (OverlayInteractor.gameObject.activeSelf) OverlayInteractor.Resize();
+                    if (Interactor.OverlayInteractor.gameObject.activeSelf) Interactor.OverlayInteractor.Resize();
                     
-                    Interactor.PanTutorial();
+                    
+                    // Interactor.PanTutorial();
                 }
             }
             if (Input.touchCount == 2 && Interactor.Stage != "MapInterface") {
@@ -92,7 +92,7 @@ public class CameraController : MonoBehaviour {
                 } else {
                     float offset = Vector2.Distance(newPositions[0], newPositions[1]) - Vector2.Distance(lastZoomPositions[0], lastZoomPositions[1]);
                     this.GetComponent<Camera>().orthographicSize = Mathf.Clamp(GetComponent<Camera>().orthographicSize - (offset/10f), 6f, 100f);
-                    if (OverlayInteractor.gameObject.activeSelf) OverlayInteractor.Resize();
+                    if (Interactor.OverlayInteractor.gameObject.activeSelf) Interactor.OverlayInteractor.Resize();
                     lastZoomPositions = newPositions;
                     Interactor.PanTutorial();
                 }
@@ -103,7 +103,7 @@ public class CameraController : MonoBehaviour {
                     oldPos = transform.position;
                     panOrigin = Camera.main.ScreenToViewportPoint(Input.mousePosition);
                 } else {
-                    if(Input.GetMouseButtonDown(0) && OverlayInteractor.gameObject.activeSelf == false)
+                    if(Input.GetMouseButtonDown(0) && Interactor.OverlayInteractor.gameObject.activeSelf == false)
                     {
                         bDragging = true;
                         oldPos = transform.position;
@@ -111,13 +111,28 @@ public class CameraController : MonoBehaviour {
                         //https://answers.unity.com/questions/827834/click-and-drag-camera.html#:~:text=Click%20and%20Drag%20Camera%20-%20Unity%20Answers%20void,%2F%2FGet%20the%20ScreenVector%20the%20mouse%20clicked%20%7D%20if%28Input.GetMouseButton%280%29%29
                         panOrigin = Camera.main.ScreenToViewportPoint(Input.mousePosition);
                     }
-                    if(Input.GetMouseButton(0) && OverlayInteractor.gameObject.activeSelf == false && bDragging)
+                    if(Input.GetMouseButton(0) && Interactor.OverlayInteractor.gameObject.activeSelf == false && bDragging)
                     {
                         //Get the difference between where the mouse clicked and where it moved
                         Vector3 pos = Camera.main.ScreenToViewportPoint(Input.mousePosition) - panOrigin;// + new Vector3(example.GetComponent<StructureController>().translation.x * Time.deltaTime, example.GetComponent<StructureController>().translation.y * Time.deltaTime, 0);    
                         //Move the position of the camera to simulate a drag, speed * 10 for screen to worldspace conversion
                         // transform.position = new Vector3(oldPos.x + -pos.x * GetComponent<Camera>().orthographicSize * 2f, 100, oldPos.y + -pos.y * GetComponent<Camera>().orthographicSize * 2f);   
-                        transform.Translate(new Vector3(Mathf.Clamp(-pos.x * GetComponent<Camera>().orthographicSize * 2f, -GetComponent<Camera>().orthographicSize * 2f, GetComponent<Camera>().orthographicSize * 2f), Mathf.Clamp(-pos.y * GetComponent<Camera>().orthographicSize * 2f, -GetComponent<Camera>().orthographicSize * 2f, GetComponent<Camera>().orthographicSize * 2f), 0)); 
+                        transform.Translate(new Vector3(
+                            Mathf.Clamp(-pos.x * GetComponent<Camera>().orthographicSize * 2f, -GetComponent<Camera>().orthographicSize * 2f, GetComponent<Camera>().orthographicSize * 2f),
+                            Mathf.Clamp(-pos.y * GetComponent<Camera>().orthographicSize * 2f, -GetComponent<Camera>().orthographicSize * 2f, GetComponent<Camera>().orthographicSize * 2f), 0)); 
+                                        
+                        // if (Interactor.Stage == "MapInterface") {
+                        //     Vector2 BL_Edge = Camera.main.View(Input.mousePosition);
+                        //         print (BL_Edge.ToString());
+                        //     if (BL_Edge.x < -5) {
+                        //         print ("-x");
+                        //         transform.Translate(new Vector3(Mathf.Clamp(pos.x * GetComponent<Camera>().orthographicSize * 2f, -GetComponent<Camera>().orthographicSize * 2f, GetComponent<Camera>().orthographicSize * 2f), 0, 0));
+                        //     }
+                        //     if (BL_Edge.x > 95) {
+                        //         print ("+x");
+                        //         transform.Translate(new Vector3(Mathf.Clamp(pos.x * GetComponent<Camera>().orthographicSize * 2f, -GetComponent<Camera>().orthographicSize * 2f, GetComponent<Camera>().orthographicSize * 2f), 0, 0));
+                        //     }
+                        // }
                         panOrigin = Camera.main.ScreenToViewportPoint(Input.mousePosition);
                     }
                     if(Input.GetMouseButtonUp(0) && bDragging)
@@ -127,6 +142,20 @@ public class CameraController : MonoBehaviour {
                     }
                 }
             }
+        }
+        if (Interactor.Stage == "MapInterface") {
+            // if (transform.localPosition.y > 35 + (Screen.height / 1000)) {
+            //     transform.localPosition = new Vector3(transform.localPosition.x, 35, 0);
+            // }
+            // if (transform.localPosition.y < -75 - (Screen.height / 1000)) {
+            //     transform.localPosition = new Vector3(transform.localPosition.x, -75, 0);
+            // }
+            // if (transform.localPosition.x > 95 + (Screen.width / 1000)) {
+            //     transform.localPosition = new Vector3(100, transform.localPosition.y, 0);
+            // }
+            // if (transform.localPosition.x < -5 - (Screen.width / 1000)) {
+            //     transform.localPosition = new Vector3(-5, transform.localPosition.y, 0);
+            // }
         }
     }
     int cycle_count = 1;
@@ -154,7 +183,7 @@ public class CameraController : MonoBehaviour {
        Interactor.BinocularTutorial();
     }
     public void ZoomIn() {
-        Interactor.MapZoom();
+        if (Interactor.Stage == "MapInterface") Interactor.MapZoom();
         camera.orthographicSize = Mathf.Clamp(camera.orthographicSize - 0.5f * GetComponent<Camera>().orthographicSize, 6f, 250f);
     }
     public void ZoomOut() {
@@ -164,25 +193,25 @@ public class CameraController : MonoBehaviour {
         Interactor.Sound("Click");
         Interactor.PanTutorial();
         transform.Translate(new Vector3(0, GetComponent<Camera>().orthographicSize * .33f, 0)); 
-        if (OverlayInteractor.gameObject.activeSelf) OverlayInteractor.Resize();
+        if (Interactor.OverlayInteractor.gameObject.activeSelf) Interactor.OverlayInteractor.Resize();
     }
     public void OnPanLeft() {
         Interactor.Sound("Click");
         Interactor.PanTutorial();
         transform.Translate(new Vector3(-GetComponent<Camera>().orthographicSize * .33f, 0, 0)); 
-        if (OverlayInteractor.gameObject.activeSelf) OverlayInteractor.Resize();
+        if (Interactor.OverlayInteractor.gameObject.activeSelf) Interactor.OverlayInteractor.Resize();
     }
     public void OnPanRight() {
         Interactor.Sound("Click");
         Interactor.PanTutorial();
         transform.Translate(new Vector3(GetComponent<Camera>().orthographicSize * .33f, 0, 0)); 
-        if (OverlayInteractor.gameObject.activeSelf) OverlayInteractor.Resize();
+        if (Interactor.OverlayInteractor.gameObject.activeSelf) Interactor.OverlayInteractor.Resize();
     }
     public void OnPanDown() {
         Interactor.Sound("Click");
         Interactor.PanTutorial();
         transform.Translate(new Vector3(0, -GetComponent<Camera>().orthographicSize * .33f, 0)); 
-        if (OverlayInteractor.gameObject.activeSelf) OverlayInteractor.Resize();
+        if (Interactor.OverlayInteractor.gameObject.activeSelf) Interactor.OverlayInteractor.Resize();
     }   
     public void ReloadScene() {
         SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);
