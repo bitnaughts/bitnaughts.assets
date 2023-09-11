@@ -99,11 +99,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isAi: 1
-  translation: {x: 0, y: 0, z: 0}
+  translation: {x: 0, y: 0}
   average_rotation: 0
+  rotation: 0
   Explosion: {fileID: 0}
   Launched: 0
   explosion_timer: 0
+  random_initial_speed: 0
+  random_rotation: 0
   Hitpoints: 1
 --- !u!199 &7507134758477673587
 ParticleSystemRenderer:
