@@ -73,7 +73,7 @@ public class CameraController : MonoBehaviour {
         this.transform.SetParent(GameObject.Find(components[component]).transform);
         this.transform.position = new Vector3(0, -100, 0);
         this.transform.localEulerAngles = new Vector3(0, 0, 0);
-        Interactor.OverlayInteractor.OnDropdownChange("");
+        Interactor.OverlayInteractor.OnDropdownChange(0);
         Interactor.Sound("Toggle");
     }
     float delay_after_zoom = 0;
@@ -231,12 +231,12 @@ public class CameraController : MonoBehaviour {
     }
     public void ZoomIn() {
         if (Interactor.Stage == "MapInterface" || Interactor.Stage == "MapZoom") Interactor.MapZoom();
-        camera.orthographicSize = Mathf.Clamp(camera.orthographicSize - 0.5f * GetComponent<Camera>().orthographicSize, 6f, 250f);
+        camera.orthographicSize = Mathf.Clamp(camera.orthographicSize - 0.5f * GetComponent<Camera>().orthographicSize, 6f, 248f);
         if (Interactor.OverlayInteractor.gameObject.activeSelf) Interactor.OverlayInteractor.Resize();
     }
     public void ZoomOut() {
-        camera.orthographicSize = Mathf.Clamp(camera.orthographicSize + 0.5f * GetComponent<Camera>().orthographicSize, 6f, 250f);
-        if (Interactor.Stage == "MapZoom") Interactor.MapUnzoom();
+        camera.orthographicSize = Mathf.Clamp(camera.orthographicSize + 0.5f * GetComponent<Camera>().orthographicSize, 6f, 248f);
+        Interactor.MapUnzoom();
         if (Interactor.OverlayInteractor.gameObject.activeSelf) Interactor.OverlayInteractor.Resize();
     }
     public void OnPanUp() {
