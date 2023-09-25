@@ -52,14 +52,15 @@ public class CameraController : MonoBehaviour {
 
     public float waitTime, waitTime2;
     float timer = 0f;
+    float drag_delay = 0;
 
     bool CheckInsideEdge() {
         // print (orientation);
         if (orientation == "Horizontal" && Input.mousePosition.x > Screen.width / 2) return false;
         if (orientation == "Verticle" && Input.mousePosition.y < Screen.height / 2) return false;
-        return (Input.mousePosition.y > 114 && Input.mousePosition.y < Screen.height - 150 && Input.mousePosition.x > 114 && Input.mousePosition.x < Screen.width - 114)
-        && !(Input.mousePosition.y < 535 && Input.mousePosition.y > 265 && Input.mousePosition.x < Screen.width - 265 && Input.mousePosition.x > Screen.width - 535)
-        && !(Input.mousePosition.y < 535 && Input.mousePosition.y > 265 && Input.mousePosition.x > 265 && Input.mousePosition.x < 535); //175 to 725 from bottom left and right corners for Joystick/use weapon input for tutorial
+        return (Input.mousePosition.y > 114 && Input.mousePosition.y < Screen.height - 150 && Input.mousePosition.x > 114 && Input.mousePosition.x < Screen.width - 114);
+        //&& !(Input.mousePosition.y < 535 && Input.mousePosition.y > 265 && Input.mousePosition.x < Screen.width - 265 && Input.mousePosition.x > Screen.width - 535)
+        //&& !(Input.mousePosition.y < 535 && Input.mousePosition.y > 265 && Input.mousePosition.x > 265 && Input.mousePosition.x < 535); //175 to 725 from bottom left and right corners for Joystick/use weapon input for tutorial
     }
     int component = 0;
     public void ToggleView() {
@@ -155,6 +156,7 @@ public class CameraController : MonoBehaviour {
                 } else {
                     if(Input.GetMouseButtonDown(0) && Interactor.OverlayInteractor.gameObject.activeSelf == false)
                     {
+                        drag_delay = .1f;
                         bDragging = true;
                         oldPos = transform.position;
                         //Get the ScreenVector the mouse clicked
@@ -163,27 +165,34 @@ public class CameraController : MonoBehaviour {
                     }
                     if(Input.GetMouseButton(0) && Interactor.OverlayInteractor.gameObject.activeSelf == false && bDragging)
                     {
-                        //Get the difference between where the mouse clicked and where it moved
-                        Vector3 pos = Camera.main.ScreenToViewportPoint(Input.mousePosition) - panOrigin;// + new Vector3(example.GetComponent<StructureController>().translation.x * Time.deltaTime, example.GetComponent<StructureController>().translation.y * Time.deltaTime, 0);    
-                        //Move the position of the camera to simulate a drag, speed * 10 for screen to worldspace conversion
-                        // transform.position = new Vector3(oldPos.x + -pos.x * GetComponent<Camera>().orthographicSize * 2f, 100, oldPos.y + -pos.y * GetComponent<Camera>().orthographicSize * 2f);   
-                        transform.Translate(new Vector3(
-                            Mathf.Clamp(-pos.x * GetComponent<Camera>().orthographicSize * 4f, -GetComponent<Camera>().orthographicSize * 2f, GetComponent<Camera>().orthographicSize * 2f),
-                            Mathf.Clamp(-pos.y * GetComponent<Camera>().orthographicSize * 2f, -GetComponent<Camera>().orthographicSize * 2f, GetComponent<Camera>().orthographicSize * 2f), 0)); 
-                                        
-                        // if (Interactor.Stage == "MapInterface") {
-                        //     Vector2 BL_Edge = Camera.main.View(Input.mousePosition);
-                        //         print (BL_Edge.ToString());
-                        //     if (BL_Edge.x < -5) {
-                        //         print ("-x");
-                        //         transform.Translate(new Vector3(Mathf.Clamp(pos.x * GetComponent<Camera>().orthographicSize * 2f, -GetComponent<Camera>().orthographicSize * 2f, GetComponent<Camera>().orthographicSize * 2f), 0, 0));
-                        //     }
-                        //     if (BL_Edge.x > 95) {
-                        //         print ("+x");
-                        //         transform.Translate(new Vector3(Mathf.Clamp(pos.x * GetComponent<Camera>().orthographicSize * 2f, -GetComponent<Camera>().orthographicSize * 2f, GetComponent<Camera>().orthographicSize * 2f), 0, 0));
-                        //     }
-                        // }
-                        panOrigin = Camera.main.ScreenToViewportPoint(Input.mousePosition);
+                        if (drag_delay > 0) {
+                            drag_delay -= Time.deltaTime;
+                            
+                        } else {
+                            drag_delay = 0;
+                            //Get the difference between where the mouse clicked and where it moved
+                            Vector3 pos = Camera.main.ScreenToViewportPoint(Input.mousePosition) - panOrigin;// + new Vector3(example.GetComponent<StructureController>().translation.x * Time.deltaTime, example.GetComponent<StructureController>().translation.y * Time.deltaTime, 0);    
+                            //Move the position of the camera to simulate a drag, speed * 10 for screen to worldspace conversion
+                            // transform.position = new Vector3(oldPos.x + -pos.x * GetComponent<Camera>().orthographicSize * 2f, 100, oldPos.y + -pos.y * GetComponent<Camera>().orthographicSize * 2f);   
+                            transform.Translate(new Vector3(
+                                Mathf.Clamp(-pos.x * GetComponent<Camera>().orthographicSize * 4f, -GetComponent<Camera>().orthographicSize * 2f, GetComponent<Camera>().orthographicSize * 2f),
+                                Mathf.Clamp(-pos.y * GetComponent<Camera>().orthographicSize * 2f, -GetComponent<Camera>().orthographicSize * 2f, GetComponent<Camera>().orthographicSize * 2f), 0)); 
+                                            
+                            // if (Interactor.Stage == "MapInterface") {
+                            //     Vector2 BL_Edge = Camera.main.View(Input.mousePosition);
+                            //         print (BL_Edge.ToString());
+                            //     if (BL_Edge.x < -5) {
+                            //         print ("-x");
+                            //         transform.Translate(new Vector3(Mathf.Clamp(pos.x * GetComponent<Camera>().orthographicSize * 2f, -GetComponent<Camera>().orthographicSize * 2f, GetComponent<Camera>().orthographicSize * 2f), 0, 0));
+                            //     }
+                            //     if (BL_Edge.x > 95) {
+                            //         print ("+x");
+                            //         transform.Translate(new Vector3(Mathf.Clamp(pos.x * GetComponent<Camera>().orthographicSize * 2f, -GetComponent<Camera>().orthographicSize * 2f, GetComponent<Camera>().orthographicSize * 2f), 0, 0));
+                            //     }
+                            // }
+                            panOrigin = Camera.main.ScreenToViewportPoint(Input.mousePosition);
+                        }
+                        
                     }
                     if(Input.GetMouseButtonUp(0) && bDragging)
                     {
@@ -214,16 +223,16 @@ public class CameraController : MonoBehaviour {
         this.transform.localPosition = new Vector3(0, 0, -200);
         this.transform.localEulerAngles = new Vector3(0, 0, 0);
         Interactor.CycleTutorial();
-        Interactor.SetBinocular("⛭");
+        Interactor.SetBinocular("off");
     }
     public void BinocularView() {
-        if (Interactor.GetBinocular() == "⛯") {
-            Interactor.SetBinocular("⛭");
+        if (Interactor.GetBinocular() == "on") {
+            Interactor.SetBinocular("off");
             this.transform.SetParent(GameObject.Find("Example").transform);
             this.transform.localEulerAngles = new Vector3(0, 0, 0);
             this.transform.localPosition = new Vector3(0, 0, -200);
         } else {
-            Interactor.SetBinocular("⛯");
+            Interactor.SetBinocular("on");
             this.transform.SetParent(GameObject.Find("Example").transform.GetChild(0).transform);
             this.transform.localEulerAngles = new Vector3(0, 0, 0);
             this.transform.localPosition = new Vector3(0, 0, -200);
