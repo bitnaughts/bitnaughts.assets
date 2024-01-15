@@ -54,13 +54,18 @@ public class CameraController : MonoBehaviour {
     float timer = 0f;
     float drag_delay = 0;
 
-    bool CheckInsideEdge() {
+    public bool CheckInsideEdge() {
         // print (orientation);
-        if (orientation == "Horizontal" && Input.mousePosition.x > Screen.width / 2) return false;
-        if (orientation == "Verticle" && Input.mousePosition.y < Screen.height / 2) return false;
-        return (Input.mousePosition.y > 114 && Input.mousePosition.y < Screen.height - 150 && Input.mousePosition.x > 114 && Input.mousePosition.x < Screen.width - 114);
+        if (orientation == "Horizontal" && Input.mousePosition.x > (Screen.width / 2) - 114) return false;
+        if (orientation == "Verticle" && Input.mousePosition.y < (Screen.height / 2) + 114) return false;
+        return (Input.mousePosition.y > 114 && Input.mousePosition.y < Screen.height - 114 && Input.mousePosition.x > 114 && Input.mousePosition.x < Screen.width - 114);
         //&& !(Input.mousePosition.y < 535 && Input.mousePosition.y > 265 && Input.mousePosition.x < Screen.width - 265 && Input.mousePosition.x > Screen.width - 535)
         //&& !(Input.mousePosition.y < 535 && Input.mousePosition.y > 265 && Input.mousePosition.x > 265 && Input.mousePosition.x < 535); //175 to 725 from bottom left and right corners for Joystick/use weapon input for tutorial
+    }
+    public Vector3 GetMapCenter() {
+        if (orientation == "Horizontal") return new Vector3(Screen.width / 4, Screen.height / 2);
+        if (orientation == "Verticle") return new Vector3(Screen.width / 2, 3 * Screen.height / 4);
+        return new Vector3(Screen.width / 2, Screen.height / 2);
     }
     int component = 0;
     public void ToggleView() {
@@ -121,7 +126,7 @@ public class CameraController : MonoBehaviour {
         //     this.transform.position = new Vector3(0, -100, 0);
         //     this.transform.localEulerAngles = new Vector3(0, 0, 0);
         // }
-        if (CheckInsideEdge() || Interactor.Stage == "MapInterface")
+        if (CheckInsideEdge())// && Interactor.Stage == "MapInterface")
         {
             // if (Input.GetAxis("Mouse ScrollWheel") != 0 && Interactor.Stage != "MapInterface") {
             //     if (GameObject.Find("Dropdown List") == null) { // && EventSystem.current.currentSelectedGameObject == null
@@ -175,7 +180,7 @@ public class CameraController : MonoBehaviour {
                             //Move the position of the camera to simulate a drag, speed * 10 for screen to worldspace conversion
                             // transform.position = new Vector3(oldPos.x + -pos.x * GetComponent<Camera>().orthographicSize * 2f, 100, oldPos.y + -pos.y * GetComponent<Camera>().orthographicSize * 2f);   
                             transform.Translate(new Vector3(
-                                Mathf.Clamp(-pos.x * GetComponent<Camera>().orthographicSize * 4f, -GetComponent<Camera>().orthographicSize * 2f, GetComponent<Camera>().orthographicSize * 2f),
+                                Mathf.Clamp(-pos.x * GetComponent<Camera>().orthographicSize * 2f, -GetComponent<Camera>().orthographicSize * 2f, GetComponent<Camera>().orthographicSize * 2f),
                                 Mathf.Clamp(-pos.y * GetComponent<Camera>().orthographicSize * 2f, -GetComponent<Camera>().orthographicSize * 2f, GetComponent<Camera>().orthographicSize * 2f), 0)); 
                                             
                             // if (Interactor.Stage == "MapInterface") {
