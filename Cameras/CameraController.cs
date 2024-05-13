@@ -98,6 +98,7 @@ public class CameraController : MonoBehaviour {
             GameObject.Find("WorldPanel").GetComponent<RectTransform>().offsetMax = new Vector2(0, 0);
             GameObject.Find("InterpreterPanel").GetComponent<RectTransform>().offsetMin = new Vector2(0, 0);
             GameObject.Find("InterpreterPanel").GetComponent<RectTransform>().offsetMax = new Vector2(0, 0);
+            GameObject.Find("MapScreenOverlay").GetComponent<RectTransform>().offsetMax = new Vector2(0, -100);
             GetComponent<Camera>().rect = new Rect(0.0f, 0.5f, 1f, 0.5f);
             orientation = "Verticle";
         }
@@ -115,6 +116,7 @@ public class CameraController : MonoBehaviour {
             GameObject.Find("WorldPanel").GetComponent<RectTransform>().offsetMax = new Vector2(0, 0);
             GameObject.Find("InterpreterPanel").GetComponent<RectTransform>().offsetMin = new Vector2(0, 0);
             GameObject.Find("InterpreterPanel").GetComponent<RectTransform>().offsetMax = new Vector2(0, 0);
+            GameObject.Find("MapScreenOverlay").GetComponent<RectTransform>().offsetMax = new Vector2(0, 0);
             orientation = "Horizontal";    
         }
         if (Interactor.Stage == "MapZoom") {
@@ -224,21 +226,23 @@ public class CameraController : MonoBehaviour {
     }
     int cycle_count = 1;
     public void CycleView() {
-        this.transform.SetParent(GameObject.Find("World").GetComponentsInChildren<StructureController>()[cycle_count++ % GameObject.Find("World").GetComponentsInChildren<StructureController>().Length].transform);
+        GameObject cycled = GameObject.Find("World").GetComponentsInChildren<StructureController>()[++cycle_count % GameObject.Find("World").GetComponentsInChildren<StructureController>().Length].gameObject;
+        this.transform.SetParent(cycled.transform);
         this.transform.localPosition = new Vector3(0, 0, -200);
         this.transform.localEulerAngles = new Vector3(0, 0, 0);
+        Interactor.ActiveStructure = cycled.name;
         Interactor.CycleTutorial();
         Interactor.SetBinocular("off");
     }
     public void BinocularView() {
         if (Interactor.GetBinocular() == "on") {
-            Interactor.SetBinocular("off");
-            this.transform.SetParent(GameObject.Find("Example").transform);
+            Interactor.SetBinocular("off"); 
+            this.transform.SetParent(GameObject.Find(Interactor.ActiveStructure).transform);
             this.transform.localEulerAngles = new Vector3(0, 0, 0);
             this.transform.localPosition = new Vector3(0, 0, -200);
         } else {
             Interactor.SetBinocular("on");
-            this.transform.SetParent(GameObject.Find("Example").transform.GetChild(0).transform);
+            this.transform.SetParent(GameObject.Find(Interactor.ActiveStructure).transform.GetChild(0).transform);
             this.transform.localEulerAngles = new Vector3(0, 0, 0);
             this.transform.localPosition = new Vector3(0, 0, -200);
         }
