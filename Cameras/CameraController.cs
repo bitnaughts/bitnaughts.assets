@@ -56,9 +56,9 @@ public class CameraController : MonoBehaviour {
 
     public bool CheckInsideEdge() {
         // print (orientation);
-        if (orientation == "Horizontal" && Input.mousePosition.x > (Screen.width / 2) - 114) return false;
-        if (orientation == "Verticle" && Input.mousePosition.y < (Screen.height / 2) + 114) return false;
-        return (Input.mousePosition.y > 114 && Input.mousePosition.y < Screen.height - 114 && Input.mousePosition.x > 114 && Input.mousePosition.x < Screen.width - 114);
+        if (orientation == "Horizontal" && Input.mousePosition.x > (Screen.width / 2) - 75) return false;
+        if (orientation == "Verticle" && Input.mousePosition.y < (Screen.height / 2) + 75) return false;
+        return (Input.mousePosition.y > 75 && Input.mousePosition.y < Screen.height - 75 && Input.mousePosition.x > 75 && Input.mousePosition.x < Screen.width - 75);
         //&& !(Input.mousePosition.y < 535 && Input.mousePosition.y > 265 && Input.mousePosition.x < Screen.width - 265 && Input.mousePosition.x > Screen.width - 535)
         //&& !(Input.mousePosition.y < 535 && Input.mousePosition.y > 265 && Input.mousePosition.x > 265 && Input.mousePosition.x < 535); //175 to 725 from bottom left and right corners for Joystick/use weapon input for tutorial
     }
