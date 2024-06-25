@@ -225,13 +225,20 @@ public class CameraController : MonoBehaviour {
         }
     }
     int cycle_count = 1;
+    public void CycleView(GameObject target) 
+    {
+        this.transform.SetParent(target.transform);
+        this.transform.localPosition = new Vector3(0, 0, -200);
+        this.transform.localEulerAngles = new Vector3(0, 0, 0);
+        Interactor.ActiveStructure = target.name;
+        Interactor.SetBinocular("off");
+    }
     public void CycleView() {
         GameObject cycled = GameObject.Find("World").GetComponentsInChildren<StructureController>()[++cycle_count % GameObject.Find("World").GetComponentsInChildren<StructureController>().Length].gameObject;
         this.transform.SetParent(cycled.transform);
         this.transform.localPosition = new Vector3(0, 0, -200);
         this.transform.localEulerAngles = new Vector3(0, 0, 0);
         Interactor.ActiveStructure = cycled.name;
-        Interactor.CycleTutorial();
         Interactor.SetBinocular("off");
     }
     public void BinocularView() {
